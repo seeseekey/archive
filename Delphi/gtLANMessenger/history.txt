@@ -1,0 +1,5 @@
+Einführung eines strukturierten Protokolles
+Unterstüzung von Xp Themes
+Fehler beim Doppelklick auf die Kontaktliste wurde behoben
+Nachrichtenfenster sind nun mini und maximierbar
+Hauptfenster wurde größenveränderbar gemacht
