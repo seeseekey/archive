@@ -1,0 +1,7 @@
+[allgemein]
+backgroundmusic=1
+[system]
+double buffer=0
+[audio]
+backgroundmusic=1
+volume=8988
