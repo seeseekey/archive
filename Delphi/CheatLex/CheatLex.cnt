@@ -1,0 +1,29 @@
+;This help file was created with HelpScribble 7.2.0
+;Registered to: Claude Renaud
+
+:BASE CheatLex.hlp
+:TITLE CheatLex
+1 CheatLex
+2 Was ist CheatLex?=Scribble10
+2 Systemvorausetzungen=Scribble20
+2 Die Menüs=Scribble30
+1 Die Kunst des Cheatens
+2 Vorwort=Scribble110
+2 Einführung=Scribble120
+2 Was brauche ich?=Scribble125
+2 Cheats=Scribble130
+2 Levelcodes=Scribble140
+2 Patches=Scribble150
+2 Leveldateien kopieren=Scribble160
+2 Bits & Bytes=Scribble180
+2 Hexzahlen=Scribble190
+2 Offset & Sektor=Scribble200
+2 Spielstände manipulieren=Scribble210
+2 Theorie der Decodierung=Scribble220
+2 Subtraktions/Additions-Codieralgorithmen=Scribble230
+2 Bitweise Codierung=Scribble240
+2 Komprimierung=Scribble250
+2 Der LZH-Algorithmus=Scribble260
+2 Gepackte Dateien=Scribble270
+2 Ausführbare Dateien=Scribble280
+2 Bild- & Videodateien=Scribble290

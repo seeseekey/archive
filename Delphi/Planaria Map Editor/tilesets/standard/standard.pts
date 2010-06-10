@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<xml>
+  <meta>
+    <tilesetName>Standard</tilesetName>
+    <tilesetTileSize>64</tilesetTileSize>
+  </meta>
+  <layers>
+    <0>
+      <still>l0_grauerstein.png</still>
+      <still>l0_schwarzerstein.png</still>
+      <still>l0_steinebraun.png</still>
+      <still>l0_steinebunt.png</still>
+      <still>l0_steinebuntgross.png</still>
+      <still>l0_steinebuntklein.png</still>
+      <still>l0_steinedunkelgrau.png</still>
+      <still>l0_steinegrau.png</still>
+      <still>l0_steineweiß.png</still>
+      <still>l0_grass.png</still>
+      <still>l0_roterstein.png</still>
+      <still>l0_wasser.png</still>
+    </0>
+    <2>
+      <still>l3_dekotest.png</still>
+    </2>
+  </layers>
+</xml>
