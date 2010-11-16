@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xml>
+  <SMTP>
+    <Server>smtp.example.com</Server>
+	<Username>test</Username>
+	<Password>geheim</Password>
+    <SenderMail>webmaster@example.com</SenderMail>
+    <RecieverMail>test@example.com</RecieverMail>
+  </SMTP>
+  <IRC>
+    <UserName>Example</UserName>
+    <RealName>Example</RealName>
+    <Ident>~Miranda</Ident>
+    <Server>irc.freenode.net</Server>
+    <Channel>#seeseekey</Channel>
+  </IRC>
+</xml>
