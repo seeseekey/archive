@@ -10,7 +10,7 @@
   <IRC>
     <UserName>Example</UserName>
     <RealName>Example</RealName>
-    <Ident>~Miranda</Ident>
+    <Ident>Miranda</Ident>
     <Server>irc.freenode.net</Server>
     <Channel>#seeseekey</Channel>
   </IRC>
