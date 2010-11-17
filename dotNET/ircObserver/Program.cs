@@ -18,12 +18,17 @@ namespace ircObserver
 
 		static void OnChannelMessage(object sender, IrcEventArgs e)
 		{
+			string cbMessage="";
+
 			foreach(string i in e.Data.MessageArray)
 			{
-				string msg=String.Format("[{0:D2}:{1:D2}] {2}: {3}", DateTime.Now.Hour, DateTime.Now.Minute, e.Data.Nick, i);
-				Conversion.Add(msg);
-				Console.WriteLine(msg);
+				cbMessage+=i+" ";
 			}
+
+			cbMessage=cbMessage.TrimEnd(' ');
+			string msg=String.Format("[{0:D2}:{1:D2}] {2}: {3}", DateTime.Now.Hour, DateTime.Now.Minute, e.Data.Nick, cbMessage);
+			Conversion.Add(msg);
+			Console.WriteLine(msg);
 		}
 
 		static void timer_Tick(object sender, ElapsedEventArgs e)
@@ -31,21 +36,24 @@ namespace ircObserver
 			try
 			{
 				DateTime Now=DateTime.Now;
-				if(Now.Hour==23&&Now.Minute>55&&MailSended==false)
+				if(Now.Hour==23&&Now.Minute>55)
 				{
-					MailSended=true;
-
-					string caption=String.Format("IRC Log - Channel {0} - Datum: {1}", channel, DateTime.Now.ToLongDateString());
-					string msg=caption+"\n\n";
-
-					foreach(string i in Conversion)
+					if(MailSended==false)
 					{
-						msg+=i+"\n";
+						MailSended=true;
+
+						string caption=String.Format("IRC Log - Channel {0} - Datum: {1}", channel, DateTime.Now.ToLongDateString());
+						string msg=caption+"\n\n";
+
+						foreach(string i in Conversion)
+						{
+							msg+=i+"\n";
+						}
+
+						Conversion.Clear();
+
+						SMTP.SendMailMessageWithAuth(smtpserver, smtpUsername, smtpPassword, senderMail, "ircObserver", recieverMail, recieverMail, caption, msg);
 					}
-
-					Conversion.Clear();
-
-					SMTP.SendMailMessageWithAuth(smtpserver, smtpUsername, smtpPassword, senderMail, "ircObserver", recieverMail, recieverMail, caption, msg);
 				}
 				else
 				{
