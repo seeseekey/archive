@@ -1,4 +1,4 @@
-# ChronoTweet v0.30
+# ChronoTweet v0.40
 # http://seeseekey.net
 #
 # Installation
