@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using CSCL;
-using CSCL.Graphic.TWAIN;
+using Juliette.Graphic.TWAIN;
 using System.IO;
 using CSCL.Graphic;
 

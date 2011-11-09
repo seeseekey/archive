@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Win32\ComCtl32.cs" />
+    <Compile Include="API\Win32\Enums.cs" />
+    <Compile Include="API\Win32\Gdi32.cs" />
+    <Compile Include="API\Win32\Kernel32.cs" />
+    <Compile Include="API\Win32\Structs.cs" />
+    <Compile Include="API\Win32\User32.cs" />
     <Compile Include="CustomTreeNodeData.cs" />
     <Compile Include="FormAbout.cs">
       <SubType>Form</SubType>
@@ -98,6 +104,41 @@
     <Compile Include="plugins\IPlugin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TWAIN\Capabilities.cs" />
+    <Compile Include="TWAIN\Capability.cs" />
+    <Compile Include="TWAIN\ConditionCodes.cs" />
+    <Compile Include="TWAIN\ContainerTypes.cs" />
+    <Compile Include="TWAIN\DataAttributeTypes.cs" />
+    <Compile Include="TWAIN\DataGroups.cs" />
+    <Compile Include="TWAIN\DataSource.cs" />
+    <Compile Include="TWAIN\DataSourceManager.cs" />
+    <Compile Include="TWAIN\Event.cs" />
+    <Compile Include="TWAIN\Fix32.cs" />
+    <Compile Include="TWAIN\Identity.cs" />
+    <Compile Include="TWAIN\ImageInfo.cs" />
+    <Compile Include="TWAIN\InternalTwainController.cs" />
+    <Compile Include="TWAIN\ItemTypes.cs" />
+    <Compile Include="TWAIN\Messages.cs" />
+    <Compile Include="TWAIN\PendingXfers.cs" />
+    <Compile Include="TWAIN\Protocols.cs" />
+    <Compile Include="TWAIN\ReturnCodes.cs" />
+    <Compile Include="TWAIN\ScannedAllEventArgs.cs" />
+    <Compile Include="TWAIN\ScannedOneEventArgs.cs" />
+    <Compile Include="TWAIN\Status.cs" />
+    <Compile Include="TWAIN\Twain32.cs" />
+    <Compile Include="TWAIN\TwainCommands.cs" />
+    <Compile Include="TWAIN\TwainController.cs" />
+    <Compile Include="TWAIN\TwainException.cs" />
+    <Compile Include="TWAIN\TwainExceptions.Designer.cs" />
+    <Compile Include="TWAIN\TwainPreviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TWAIN\TwainPreviewForm.Designer.cs">
+      <DependentUpon>TwainPreviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TWAIN\UserInterface.cs" />
+    <Compile Include="TWAIN\Version.cs" />
+    <Compile Include="TWAIN\Xfer.cs" />
     <EmbeddedResource Include="FormAbout.resx">
       <DependentUpon>FormAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -120,6 +161,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSearchResults.resx">
       <DependentUpon>FormSearchResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TWAIN\TwainExceptions.resx" />
+    <EmbeddedResource Include="TWAIN\TwainPreviewForm.resx">
+      <DependentUpon>TwainPreviewForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +193,7 @@
     <Content Include="root.ico" />
     <Content Include="world.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
