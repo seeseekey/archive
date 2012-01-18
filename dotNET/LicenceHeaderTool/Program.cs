@@ -42,22 +42,19 @@ namespace LicenceHeaderTool
 
 			ret.Add("");
 			ret.Add(String.Format("  {0}", filename));
-			ret.Add("  ");
-			ret.Add("  Author:");
-			ret.Add(String.Format("       {0} <{1}>", author, mail));
-			ret.Add(" ");
-			ret.Add(String.Format("  Copyright (c) {0} by {1}", year, author));
-			ret.Add(" ");
+			ret.Add("");
+			ret.Add(String.Format("  Copyright (c) {0} by {1} <{2}>", year, author, mail));
+			ret.Add("");
 			ret.Add("  This program is free software: you can redistribute it and/or modify");
 			ret.Add("  it under the terms of the GNU General Public License as published by");
 			ret.Add("  the Free Software Foundation, either version 3 of the License, or");
 			ret.Add("  (at your option) any later version.");
-			ret.Add(" ");
+			ret.Add("");
 			ret.Add("  This program is distributed in the hope that it will be useful,");
 			ret.Add("  but WITHOUT ANY WARRANTY; without even the implied warranty of");
 			ret.Add("  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the");
 			ret.Add("  GNU General Public License for more details.");
-			ret.Add(" ");
+			ret.Add("");
 			ret.Add("  You should have received a copy of the GNU General Public License");
 			ret.Add("  along with this program.  If not, see <http://www.gnu.org/licenses/>.");
 
