@@ -41,7 +41,7 @@ namespace LicenceHeaderTool
 			List<string> ret=new List<string>();
 
 			ret.Add("");
-			ret.Add(String.Format("  {0}", filename));
+			ret.Add(String.Format("  {0}", FileSystem.GetFilename(filename)));
 			ret.Add("");
 			ret.Add(String.Format("  Copyright (c) {0} by {1} <{2}>", year, author, mail));
 			ret.Add("");
@@ -63,9 +63,10 @@ namespace LicenceHeaderTool
 		#endregion
 
 		#region Functions
-		static void ProcessCSharpFile(string filename, string author, string mail, string year, License license)
+		static void ProcessCSharpFile(string filename, bool overwrite, string author, string mail, string year, License license)
 		{
-			if(FileSystem.GetFilename(filename.ToLower())=="assemblyinfo.cs")
+			if(FileSystem.GetFilename(filename.ToLower())=="assemblyinfo.cs" ||
+			   FileSystem.GetFilename(filename.ToLower()).IndexOf(".designer.")!=-1)
 			{
 				Console.WriteLine("Skip file {0}", FileSystem.GetFilename(filename));
 				return;
@@ -90,10 +91,41 @@ namespace LicenceHeaderTool
 				}
 			}
 
-			//Add licence header
-			if(hasLicenseHeader==false)
+			if(overwrite)
 			{
-				List<string> licenceText=GetGPLv3(filename, author, mail, year);
+				int usingLine=0;
+				foreach(string line in lines)
+				{
+					usingLine++;
+
+					if(line.StartsWith("using"))
+					{
+						break;
+					}
+				}
+
+				lines.RemoveRange(0, usingLine-1);
+			}
+
+			//Add licence header
+			if(hasLicenseHeader==false||overwrite)
+			{
+				List<string> licenceText=null;
+
+				switch(license)
+				{
+					case License.GPLv3:
+						{
+							licenceText=GetGPLv3(filename, author, mail, year);
+							break;
+						}
+					default:
+						{
+							Console.WriteLine("Unknown licence. Skip file. {0}", FileSystem.GetFilename(filename));
+							return;
+						}
+				}
+
 
 				//Kommentare hinzufügen
 				for(int i=0; i<licenceText.Count; i++)
@@ -114,7 +146,7 @@ namespace LicenceHeaderTool
 			}
 		}
 
-		static void ProcessFiles(string projectPath, string author, string mail, string year, License license)
+		static void ProcessFiles(string projectPath, bool overwrite, string author, string mail, string year, License license)
 		{
 			List<string> files=FileSystem.GetFiles(projectPath, true);
 
@@ -126,7 +158,7 @@ namespace LicenceHeaderTool
 				{
 					case "cs":
 						{
-							ProcessCSharpFile(file, author, mail, year, license);
+							ProcessCSharpFile(file, overwrite, author, mail, year, license);
 							break;
 						}
 					default:
@@ -161,7 +193,7 @@ namespace LicenceHeaderTool
 			{
 				List<string> files=GetFilesFromParameters(parameters);
 
-				if(files.Count<5) Console.WriteLine("Need more parameters!");
+				if(files.Count<4) Console.WriteLine("Need more parameters!");
 				else
 				{
 					string projectPath=files[0];
@@ -169,7 +201,7 @@ namespace LicenceHeaderTool
 					string mail=files[2];
 					string year=files[3];
 
-					ProcessFiles(projectPath, author, mail, year, License.GPLv3);
+					ProcessFiles(projectPath, parameters.GetBool("overwrite"), author, mail, year, License.GPLv3);
 				}
 			}
 			else
