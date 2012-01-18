@@ -5,7 +5,7 @@ mcmt/bin
 *.pidb
 
 # Solution files
-*.sou
+*.suo
 
 # Misc files
 *.cache
