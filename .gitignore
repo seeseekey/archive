@@ -1,0 +1,13 @@
+# Build folder
+mcmt/bin
+
+# Debug files
+*.pidb
+
+# Solution files
+*.sou
+
+# Misc files
+*.cache
+*.exe
+*.manifest
