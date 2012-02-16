@@ -13,11 +13,13 @@ load_plugin_textdomain("issuetracker", false, 'issuetracker/');
 //Requires
 require('issuetracker-installer.php');
 
-# register our installer
+//register our installer
 register_activation_hook(__FILE__, 'it_install');
 
-//Debug
+//load language files
 load_plugin_textdomain("issuetracker", false, 'issuetracker/languages/');
+
+//TODO Doppelter Dateiupload führt zu nicht upload
 
 class issuetracker {
 
@@ -37,7 +39,7 @@ class issuetracker {
         add_action('wp_head', array(&$this, 'it_styles'));
 
         # make sure jquery is loaded
-        wp_enqueue_script('jquery'); 
+        wp_enqueue_script('jquery');
     }
 
     function admin_menu() {
@@ -201,12 +203,12 @@ class issuetracker {
                     $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}it_comment WHERE comment_id = %d", $this->get_request('comment_id')));
                     it_redirect($this->build_url('do=view_issue&issue=' . $id, $post_id));
                     break;
-                case 'save_issue':                   
+                case 'save_issue':
 // will take all other params from _REQUEST
                     $post_content = $wpdb->get_var($wpdb->prepare("SELECT post_content FROM $wpdb->posts WHERE ID = %d", $this->get_request('post_id')));
                     preg_match('/<!--issuetracker-(\d+)-->/', $post_content, $matches);
-                    
-                    $content = $this->it_save_changes($matches[1]);    
+
+                    $content = $this->it_save_changes($matches[1]);
                     break;
             }
             die;
@@ -307,7 +309,7 @@ class issuetracker {
         global $wpdb;
 // in all cases should only send an int to here, but just to make sure
         $tracker_id = (int) $tracker_id;
-        
+
         return $wpdb->get_results("SELECT i.*, t.*, s.*, c.*, u.display_name as assignee_name, u2.display_name as reporter_name
 							FROM {$wpdb->prefix}it_issue i
 							JOIN {$wpdb->prefix}it_type t ON i.issue_type = t.type_id
@@ -322,10 +324,11 @@ class issuetracker {
     function it_get_issue($id) {
         global $wpdb;
         $id = (int) $id;
-        return $wpdb->get_row("SELECT i.*, t.*, s.*, u.display_name as assignee_name, u2.display_name as reporter_name
+        return $wpdb->get_row("SELECT i.*, t.*, s.*, c.*, u.display_name as assignee_name, u2.display_name as reporter_name
 						FROM {$wpdb->prefix}it_issue i
 						JOIN {$wpdb->prefix}it_type t ON i.issue_type = t.type_id
 						JOIN  {$wpdb->prefix}it_status s ON i.issue_status = s.status_id
+                                                JOIN {$wpdb->prefix}it_category c ON i.issue_category = c.category_id
 						LEFT JOIN {$wpdb->prefix}users u ON i.issue_assignee = u.ID
 						JOIN {$wpdb->prefix}users u2 ON i.issue_reporter = u2.ID
 						WHERE i.issue_id = '$id'");
@@ -335,9 +338,11 @@ class issuetracker {
         global $post, $wpdb;
 
         $issue = $this->it_get_issue($id);
+        
         if (!$issue) {
             return "Couldn't find that issue.";
         }
+        
         $user = wp_get_current_user();
         $strike = $issue->status_strike ? 'strike' : '';
         $issue->issue_time = date('F jS, Y @ h:i a', $issue->issue_time);
@@ -346,12 +351,14 @@ class issuetracker {
 											WHERE user_id = %d AND issue_id = %d", $user->ID, $id));
 
         $delete_link = '';
+        
         if (current_user_can('manage_options')) {
             $delete_link = '
 		<div>
 			<label><a href="' . $this->build_url('do=it_qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">Delete</a></label>
 		</div>';
         }
+        
         $onoff = $starred ? 'on' : 'off';
         $issue->issue_summary = ($issue->issue_summary);
         $issue->issue_description_bred = nl2br($issue->issue_description);
@@ -361,38 +368,42 @@ STAR;
         $content = <<<HTML
 	<div class="issuetracker issues" id="response-div">
 		<div>
-			<label>ID#</label>
+			<label>ID: </label>
 			<span>{$issue->issue_id} $star</span>
 		</div>
 		<div>
-			<label>Summary</label>
+			<label>Summary: </label>
 			<span>{$issue->issue_summary}</span>
 		</div>
 		<div>
-			<label>Type</label>
+			<label>Type: </label>
 			<span style="background:#{$issue->type_colour}">{$issue->type_name}</span>
 		</div>
+                <div>
+			<label>Category: </label>
+			<span>{$issue->category_name}</span>
+		</div>
 		<div>
-			<label>Status</label>
+			<label>Status: </label>
 			<span style="background:#{$issue->status_colour};" class="$strike">{$issue->status_name}</span>
 		</div>
 		
 		<div>
-			<label>Reported on</label>
+			<label>Reported on: </label>
 			<span>{$issue->issue_time}</span>
 		</div>
 		<div>
-			<label>Reporter</label>
+			<label>Reporter: </label>
 			<span>{$issue->reporter_name}</span>
 		</div>
 
 		<div>
-			<label>Assignee</label>
+			<label>Assignee: </label>
 			<span>{$issue->assignee_name}</span>
 		</div>
 
 		<div>
-			<label>Description</label>
+			<label>Description: </label>
 			<span>{$issue->issue_description_bred}</span>
 		</div>
 		$delete_link
@@ -457,8 +468,8 @@ HTML;
         $issue_id = (int) $this->get_request('issue_id');
         $post_id = (int) $this->get_request('post_id');
         $and_more = '';
-                
-        if ($issue_id) {           
+
+        if ($issue_id) {
             // we're either commenting or making a change, figure out the changes first
             $issue = $this->it_get_issue($issue_id);
             $and_more = 'do=view_issue&issue=' . $issue_id;
@@ -469,20 +480,21 @@ HTML;
                 $new->issue_summary = $this->get_request('summary');
                 $new->issue_type = $this->get_request('type');
                 $new->issue_status = $this->get_request('status');
+                $new->issue_category = $this->get_request('category');
                 $new->issue_description = $this->get_request('description');
                 $new->issue_assignee = $this->get_request('assignee');
 
                 if ($new->issue_summary != $issue->issue_summary) {
                     $changes[] = "<strong>Summary</strong> {$new->issue_summary}";
                 }
-                
+
                 if ($new->issue_type != $issue->issue_type) {
                     $old_type = $wpdb->get_row("SELECT type_name, type_colour FROM {$wpdb->prefix}it_type WHERE type_id={$issue->issue_type}");
                     $id = (int) $new->issue_type;
                     $new_type = $wpdb->get_row("SELECT type_name, type_colour FROM {$wpdb->prefix}it_type WHERE type_id=$id");
                     $changes[] = "<strong>Type</strong> <span style='background:#{$old_type->type_colour}'>{$old_type->type_name}</span> > <span style='background:#{$new_type->type_colour}'>{$new_type->type_name}</span>";
                 }
-                
+
                 if ($new->issue_status != $issue->issue_status) {
                     $old_status = $wpdb->get_row("SELECT status_name, status_colour, status_strike FROM {$wpdb->prefix}it_status WHERE status_id={$issue->issue_status}");
                     $strike1 = $old_status->status_strike ? 'strike' : '';
@@ -491,11 +503,11 @@ HTML;
                     $strike2 = $new_status->status_strike ? 'strike' : '';
                     $changes[] = "<strong>Status</strong> <span style='background:#{$old_status->status_colour}' class='$strike1'>{$old_status->status_name}</span> > <span style='background:#{$new_status->status_colour}' class='$strike2'>{$new_status->status_name}</span>";
                 }
-                
+
                 if ($new->issue_description != $issue->issue_description) {
                     $changes[] = "<strong>Description</strong> {$new->issue_description}";
                 }
-                
+
                 if ($new->issue_assignee != $issue->issue_assignee) {
                     $id = (int) $new->issue_assignee;
                     $new_assignee_name = '--';
@@ -507,16 +519,16 @@ HTML;
                     }
                     $changes[] = "<strong>Assignee</strong> {$new_assignee_name}";
                 }
-                
-                echo " write the new issue details";
-// write the new issue details
+
+                // write the new issue details
                 $wpdb->query($wpdb->prepare("UPDATE {$wpdb->prefix}it_issue
 										SET issue_summary = %s,
 										issue_type = %d,
 										issue_status = %d,
+										issue_category = %d,
 										issue_description = %s,
 										issue_assignee = %d
-										WHERE issue_id = %d", $new->issue_summary, $new->issue_type, $new->issue_status, $new->issue_description, $new->issue_assignee, $issue_id));
+										WHERE issue_id = %d", $new->issue_summary, $new->issue_type, $new->issue_status, $new->issue_category, $new->issue_description, $new->issue_assignee, $issue_id));
             endif;
 
             $changes_stuff = count($changes) ? '<p>' . implode('<br />', $changes) . '</p>' : '';
@@ -536,41 +548,28 @@ HTML;
                     $this->announce_change_to_stars($comment, $issue_id);
                 }
             }
-        } else {           
+        } else {
             //Upload file
             $success = false;
             $message;
             $filename;
 
-            if($_FILES["name"])
-            {
+            if ($_FILES["name"]) {
                 $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
+            } else { //no file to upload
+                $success = true;
             }
-            else //no file to upload
-            {
-                $success=true;
-            }
-            
+
             // we're submitting a new issue, save to db
             if ($success) {
                 $can = $this->user_has_permission(0);
                 $default_status = $wpdb->get_var("SELECT status_id FROM {$wpdb->prefix}it_status ORDER BY status_order ASC, status_id ASC LIMIT 0, 1");
-                
+
                 $wpdb->query($wpdb->prepare("
 			INSERT INTO {$wpdb->prefix}it_issue
 			(issue_tracker, issue_summary, issue_type, issue_status, issue_category, issue_time, issue_reporter, issue_description, issue_assignee, issue_attachment)
-			VALUES (%d, %s, %d, %d, %d, %d, %d, %s, %d, %s)", 
-                        $tracker_id, 
-                        $this->get_request('summary'), 
-                        $this->get_request('type'), 
-                        $can ? $this->get_request('status') : $default_status, 
-                        $this->get_request('category'),
-                        time(), 
-                        $user->ID, 
-                        $this->get_request('description'), 
-                        $can ? $this->get_request('assignee') : 0, 
-                        $filename));
-                
+			VALUES (%d, %s, %d, %d, %d, %d, %d, %s, %d, %s)", $tracker_id, $this->get_request('summary'), $this->get_request('type'), $can ? $this->get_request('status') : $default_status, $this->get_request('category'), time(), $user->ID, $this->get_request('description'), $can ? $this->get_request('assignee') : 0, $filename));
+
                 $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_starred (user_id, issue_id) VALUES (%d, %d)", $user->ID, $wpdb->insert_id));
             }
 
@@ -608,8 +607,8 @@ HTML;
             }
 
             if (isset($message)) {
-                $this->message = 'Error: ' . $message;
-                $this->message_class = 'error';
+                $this->message = __('Error: ') . $message;
+                $this->message_class = __('error');
             } else {
 
                 //check file spoofing
@@ -661,18 +660,18 @@ HTML;
             $sel = $type->type_id == $issue->type_id ? ' selected' : '';
             $types_options .= "<option value={$type->type_id}{$sel}>{$type->type_name}</option>";
         }
-        
+
         //category
         $categories = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_category 
 								WHERE category_tracker = $tracker_id
 								ORDER BY category_order ASC, category_id ASC");
-        
+
         $categories_options = '';
         foreach ($categories as $category) {
             $sel = $category->category_id == $issue->category_id ? ' selected' : '';
             $categories_options .= "<option value={$category->category_id}{$sel}>{$category->category_name}</option>";
         }
-        
+
         $comment_area = '';
         if ($issue->issue_id) {
             $comment_area = <<<HTML
@@ -744,6 +743,7 @@ HTML;
             global $post;
             $post_id = $post->ID;
         }
+        
         $permalink = get_permalink($post_id);
         return $permalink . (strpos($permalink, '?') === false ? '?' : '&') . $uri_string;
     }
@@ -776,6 +776,7 @@ HTML;
 
         $plugin_url = site_url() . '/wp-content/plugins/issuetracker/';
         $issues = $this->it_get_issues($tracker_id);
+        
         foreach ($issues as $issue) {
             $strike = $issue->status_strike ? 'strike' : '';
             $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
@@ -802,14 +803,14 @@ HTML;
 
         $statuses = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status WHERE status_tracker = $tracker_id ORDER BY status_order ASC, status_id ASC");
         $arr = array();
-        
+
         foreach ($statuses as $s) {
             $strike = $s->status_strike ? 'strike' : '';
             $arr[] = "<span style='background:#{$s->status_colour};' class='$strike'>{$s->status_name}</span>";
         }
 
         $content .= '<p>Status: ' . implode(', ', $arr) . '</p><hr />';
-        
+
         return $content;
     }
 
@@ -869,16 +870,16 @@ HTML;
             <h3>Types</h3>
             <a href="" onclick="return append_new_type();">Add New</a>
             <table class="form-table" id="types_table"> 
-                <?php
-                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_type WHERE type_tracker = 1 ORDER BY type_order ASC, type_id ASC");
-                foreach ($types as $type) {
-                    ?>
+        <?php
+        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_type WHERE type_tracker = 1 ORDER BY type_order ASC, type_id ASC");
+        foreach ($types as $type) {
+            ?>
                     <tr valign="top"> 
                         <td class="dragger"></td><td><input name="type_names[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo stripslashes($type->type_name) ?>" /><input name="type_colours[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo $type->type_colour ?>" /> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
                     </tr>	
-                    <?php
-                }
-                ?>
+            <?php
+        }
+        ?>
             </table>
             <script type="text/javascript" charset="utf-8">
                 function append_new_type() {
@@ -894,17 +895,17 @@ HTML;
             <a href="" onclick="return append_new_status();">Add New</a>
 
             <table class="form-table" id="status_table"> 
-                <?php
-                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status WHERE status_tracker = 1 ORDER BY status_order ASC, status_id ASC");
-                foreach ($types as $status) {
-                    ?>
+        <?php
+        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status WHERE status_tracker = 1 ORDER BY status_order ASC, status_id ASC");
+        foreach ($types as $status) {
+            ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
                         <td><input name="status_names[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo stripslashes($status->status_name) ?>" /><input name="status_colours[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo $status->status_colour ?>" /> <input type="checkbox" name="status_strikes[<?php echo $status->status_id ?>]" <?php echo $status->status_strike ? 'checked' : '' ?>> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
                     </tr>	
-                    <?php
-                }
-                ?>
+            <?php
+        }
+        ?>
             </table>
 
             <script type="text/javascript" charset="utf-8">
@@ -921,17 +922,17 @@ HTML;
             <a href="" onclick="return append_new_category();">Add New</a>
 
             <table class="form-table" id="category_table"> 
-                <?php
-                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_category WHERE category_tracker = 1 ORDER BY category_order ASC, category_id ASC");
-                foreach ($types as $category) {
-                    ?>
+        <?php
+        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_category WHERE category_tracker = 1 ORDER BY category_order ASC, category_id ASC");
+        foreach ($types as $category) {
+            ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
                         <td><input name="category_names[<?php echo $category->category_id ?>]" type="text" id="" value="<?php echo stripslashes($category->category_name) ?>" /><input name="category_colours[<?php echo $category->category_id ?>]" type="text" id="" value="<?php echo $category->category_colour ?>" /> <input type="checkbox" name="category_strikes[<?php echo $category->category_id ?>]" <?php echo $category->category_strike ? 'checked' : '' ?>> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
                     </tr>
-                    <?php
-                }
-                ?>
+            <?php
+        }
+        ?>
             </table>
 
             <script type="text/javascript" charset="utf-8">
@@ -952,7 +953,7 @@ HTML;
 
         <h3>Import from Google Code Issue Tracker CSV</h3><br/>
         <form enctype="multipart/form-data" action="" method="post">
-            <?php wp_nonce_field('import-google-code-csv'); ?>
+        <?php wp_nonce_field('import-google-code-csv'); ?>
             <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
             Select a file containing the CSV export file: <input name="userfile" type="file" />
             <p class="submit">

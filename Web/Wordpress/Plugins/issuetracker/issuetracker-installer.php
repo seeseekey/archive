@@ -1,5 +1,4 @@
 <?php
-
 function it_install() {
     //Folder
     //http://wpgrafie.de/195/wordpress-konstanten/
@@ -99,7 +98,7 @@ function it_install() {
         $wpdb->insert("{$wpdb->prefix}it_type", array('type_name' => 'Improvement', 'type_colour' => 'FFFFCF', 'type_tracker' => 1));
         $wpdb->insert("{$wpdb->prefix}it_type", array('type_name' => 'Feedback', 'type_colour' => 'E5D4E7', 'type_tracker' => 1));
 
-        /* Categories */
+        /* categories */
         $wpdb->insert("{$wpdb->prefix}it_category", array('category_name' => 'Common', 'category_tracker' => 1));
         $wpdb->insert("{$wpdb->prefix}it_category", array('category_name' => 'Server', 'category_tracker' => 1));
         $wpdb->insert("{$wpdb->prefix}it_category", array('category_name' => 'Client', 'category_tracker' => 1));
