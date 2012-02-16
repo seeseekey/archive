@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#@ default
+#: issuetracker.php:52
+msgid "Sorry you don't have the privileges to do this!"
+msgstr "Entschuldigung aber du hast keine Rechte dies zu tun!"
+
+#@ default
+#: issuetracker.php:589
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
+msgstr "Die hochgeladene Datei überschreitet die upload_max_filesize in der php.ini."
+
+#@ default
+#: issuetracker.php:592
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr "Die hochgeladene Datei überschreitet die MAX_FILE_SIZE-Direktive, die im HTML-Formular angegeben wurde."
+
+#@ default
+#: issuetracker.php:595
+msgid "The uploaded file was only partially uploaded."
+msgstr "Die hochgeladene Datei wurde nur teilweise hochgeladen."
+
+#@ default
+#: issuetracker.php:598
+msgid "No file was uploaded."
+msgstr "Es wurde keine Datei hochgeladen."
+
+#@ default
+#: issuetracker.php:601
+msgid "Missing a temporary folder."
+msgstr "Ein temporäres Verzeichnis fehlt."
+
+#@ default
+#: issuetracker.php:604
+msgid "Can't write to disk."
+msgstr "Kann nicht auf die Festplatte schreiben."
+
+#@ default
+#: issuetracker.php:641
+msgid "Change"
+msgstr "Ändere"
+
+#@ default
+#: issuetracker.php:642
+msgid "Save changes"
+msgstr "Speichere Änderungen"
+
+#@ default
+#: issuetracker.php:651
+msgid "Submit new issue"
+msgstr "Neue Aufgabe anlegen"
+
+#@ default
+#: issuetracker.php:652
+msgid "Submit"
+msgstr "Speichern"
+
+#@ default
+#: issuetracker.php:847
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Sie verfügen nicht über ausreichende Berechtigungen, um diese Seite zu betreten."
+
+#@ menu-test
+#: issuetracker.php:863
+msgid "Issue Tracker Settings"
+msgstr "Issue Tracker Einstellungen"
+
+#@ default
+#: issuetracker.php:948
+msgid "Save Changes"
+msgstr "Speichere Änderungen"
+

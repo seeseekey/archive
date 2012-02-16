@@ -1,0 +1,16 @@
+#it-footer {
+	text-align: center;
+	font-size:10px;
+}
+.strike {
+	text-decoration: line-through;
+}
+#respond select, #respond option {
+	width:98%;
+}
+
+#comment, #summary, #description, #type, #status, #assignee, #attachment, #category
+{
+    width:100%;
+    min-width: 100%;
+}
