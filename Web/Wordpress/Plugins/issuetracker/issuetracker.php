@@ -20,7 +20,6 @@ register_activation_hook(__FILE__, 'it_install');
 load_plugin_textdomain("issuetracker", false, 'issuetracker/languages/');
 
 //TODO Doppelter Dateiupload führt zu nicht upload
-//TODO Upload
 
 class issuetracker {
 
@@ -339,11 +338,11 @@ class issuetracker {
         global $post, $wpdb;
 
         $issue = $this->it_get_issue($id);
-        
+
         if (!$issue) {
             return "Couldn't find that issue.";
         }
-        
+
         $user = wp_get_current_user();
         $strike = $issue->status_strike ? 'strike' : '';
         $issue->issue_time = date('F jS, Y @ h:i a', $issue->issue_time);
@@ -352,15 +351,15 @@ class issuetracker {
 											WHERE user_id = %d AND issue_id = %d", $user->ID, $id));
 
         $delete_link = '';
-        
+
         if (current_user_can('manage_options')) {
             $delete_link = '
 		<div>
 			<label><a href="' . $this->build_url('do=it_qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">Delete</a></label>
 		</div>';
         }
-        
-        $attachmentLink=site_url() . '/wp-content/issuetracker/' . $issue->issue_attachment;
+
+        $attachmentLink = site_url() . '/wp-content/issuetracker/' . $issue->issue_attachment;
         $onoff = $starred ? 'on' : 'off';
         $issue->issue_summary = ($issue->issue_summary);
         $issue->issue_description_bred = nl2br($issue->issue_description);
@@ -474,7 +473,7 @@ HTML;
         $post_id = (int) $this->get_request('post_id');
         $and_more = '';
 
-        if ($issue_id) {
+        if ($issue_id) { //edit existing issue
             // we're either commenting or making a change, figure out the changes first
             $issue = $this->it_get_issue($issue_id);
             $and_more = 'do=view_issue&issue=' . $issue_id;
@@ -547,18 +546,32 @@ HTML;
 														WHERE comment_issue = %d AND comment_poster = %d 
 																		AND comment_body = %s AND comment_time > %d", $issue_id, $user->ID, $comment, time() - $minutes * 60));
                 if (!$already_made) {
-                    $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_comment
-									(comment_issue, comment_poster, comment_body, comment_time)
-									VALUES (%d, %d, %s, %d)", $issue_id, $user->ID, $comment, time()));
-                    $this->announce_change_to_stars($comment, $issue_id);
+                    //Upload file
+                    $success = false;
+                    $message;
+                    $filename;
+
+                    if ($_FILES['userfile']["name"]) {
+                        $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
+                    } else { //no file to upload
+                        $success = true;
+                    }
+
+                    // we're submitting a new issue, save to db
+                    if ($success) {
+                        $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_comment
+									(comment_issue, comment_poster, comment_body, comment_time, comment_attachment)
+									VALUES (%d, %d, %s, %d, %s)", $issue_id, $user->ID, $comment, time(), $filename));
+                        $this->announce_change_to_stars($comment, $issue_id);
+                    }
                 }
             }
-        } else {
+        } else { //create new issue
             //Upload file
             $success = false;
             $message;
             $filename;
-            
+
             if ($_FILES['userfile']["name"]) {
                 $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
             } else { //no file to upload
@@ -745,7 +758,7 @@ HTML;
             global $post;
             $post_id = $post->ID;
         }
-        
+
         $permalink = get_permalink($post_id);
         return $permalink . (strpos($permalink, '?') === false ? '?' : '&') . $uri_string;
     }
@@ -778,7 +791,7 @@ HTML;
 
         $plugin_url = site_url() . '/wp-content/plugins/issuetracker/';
         $issues = $this->it_get_issues($tracker_id);
-        
+
         foreach ($issues as $issue) {
             $strike = $issue->status_strike ? 'strike' : '';
             $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
