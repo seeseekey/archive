@@ -20,6 +20,7 @@ register_activation_hook(__FILE__, 'it_install');
 load_plugin_textdomain("issuetracker", false, 'issuetracker/languages/');
 
 //TODO Doppelter Dateiupload führt zu nicht upload
+//TODO Upload
 
 class issuetracker {
 
@@ -359,6 +360,7 @@ class issuetracker {
 		</div>';
         }
         
+        $attachmentLink=site_url() . '/wp-content/issuetracker/' . $issue->issue_attachment;
         $onoff = $starred ? 'on' : 'off';
         $issue->issue_summary = ($issue->issue_summary);
         $issue->issue_description_bred = nl2br($issue->issue_description);
@@ -401,7 +403,10 @@ STAR;
 			<label>Assignee: </label>
 			<span>{$issue->assignee_name}</span>
 		</div>
-
+                <div>
+			<label>Attachment: </label>
+			<span><a href="$attachmentLink">{$issue->issue_attachment}</a></span>
+		</div>
 		<div>
 			<label>Description: </label>
 			<span>{$issue->issue_description_bred}</span>
@@ -553,8 +558,8 @@ HTML;
             $success = false;
             $message;
             $filename;
-
-            if ($_FILES["name"]) {
+            
+            if ($_FILES['userfile']["name"]) {
                 $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
             } else { //no file to upload
                 $success = true;
@@ -572,9 +577,6 @@ HTML;
 
                 $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_starred (user_id, issue_id) VALUES (%d, %d)", $user->ID, $wpdb->insert_id));
             }
-
-            //Debug print files array
-            //print_r($_FILES);
         }
 
         $this->it_redirect($this->build_url($and_more, $post_id));
