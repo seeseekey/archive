@@ -424,6 +424,8 @@ HTML;
         $content .= '<div id="comments"><h3 id="comments-title">' . number_format(count($comments)) . ' comments</h3> <ol class="commentlist">';
 
         foreach ($comments as $comment) {
+            $attachmentLinkComment = site_url() . '/wp-content/issuetracker/' . $comment->comment_attachment;
+            
             $comment->comment_body = ($comment->comment_body);
             $comment->comment_time = date('F jS, Y @ h:i a', $comment->comment_time);
             $avatar = $this->get_gravatar($comment->user_email, 40, 404, 'g', true, array('class' => 'avatar avatar-40 photo'));
@@ -439,6 +441,10 @@ HTML;
 				</div>
 				<div class="comment-meta"><a href="javascript:void(0);">{$comment->comment_time}</a>$delete_link</div>
 				<div class="comment-body">{$comment->comment_body}</div>
+
+                                <hr>
+                                <label>Attachment: </label>
+                                    <span><a href="$attachmentLinkComment">{$comment->comment_attachment}</a></span>
 			</div>
 		</li>
 HTML;
