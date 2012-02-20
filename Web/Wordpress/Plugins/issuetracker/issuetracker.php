@@ -669,6 +669,9 @@ HTML;
         $__description=__("Description:", 'issuetracker');
         $__type=__("Type:", 'issuetracker');
         $__status=__("Status:", 'issuetracker');
+        $__category=__("Category:", 'issuetracker');
+        $__assignee=__("Assignee:", 'issuetracker');
+        $__attachment=__("Attachment:", 'issuetracker');
         
         //
         $user = wp_get_current_user();
@@ -739,15 +742,15 @@ HTML;
 <p ><label for="description">{$__description}:</label><br/><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
 <p ><labelfor="type">{$__type}</label><select name="type" id="type" >{$types_options}</select></p>
 <p ><label for="status">{$__status}</label><select name="status" id="status" >{$status_options}</select></p>
-<p ><label for="category">Category</label><select name="category" id="category" >{$categories_options}</select></p>
-<p ><label for="assignee">Assignee</label><select name="assignee" id="assignee" >{$users_options}</select></p>
+<p ><label for="category">{$__category}</label><select name="category" id="category" >{$categories_options}</select></p>
+<p ><label for="assignee">{$__assignee}</label><select name="assignee" id="assignee" >{$users_options}</select></p>
 OPTS;
         } else if (!$issue->issue_id) {           
             $issue_options = <<<OPTS
 <p ><label for="summary">{$__summary}</label><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
 <p ><label for="description">{$__description}</label><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
 <p ><labelfor="type">{$__type}</label><select name="type" id="type" >{$types_options}</select></p>
-<p ><label for="category">Category</label><select name="category" id="category" >{$categories_options}</select></p>
+<p ><label for="category">{$__category}</label><select name="category" id="category" >{$categories_options}</select></p>
 OPTS;
         }
         $action = $this->build_url('do=it_qdo&qdo=save_issue&post_id=' . $post->ID);
@@ -761,7 +764,7 @@ OPTS;
 		{$issue_options}
 		
 		<p>
-		Attachment:<br/>
+		{$__attachment}<br/>
 		<input type="hidden" name="MAX_FILE_SIZE" value="3000000"> <!-- 3 MB -->
 		<input id="attachment" name="userfile" type="file" />
 		</p>

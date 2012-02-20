@@ -54,37 +54,37 @@ msgstr "Ein temporäres Verzeichnis fehlt."
 msgid "Can't write to disk."
 msgstr "Kann nicht auf die Festplatte schreiben."
 
-#: issuetracker.php:670
+#: issuetracker.php:680
 #@ issuetracker
 msgid "Change"
 msgstr "Ändere"
 
-#: issuetracker.php:671
+#: issuetracker.php:681
 #@ issuetracker
 msgid "Save changes"
 msgstr "Speichere Änderungen"
 
-#: issuetracker.php:680
+#: issuetracker.php:690
 #@ issuetracker
 msgid "Submit new issue"
 msgstr "Neue Aufgabe anlegen"
 
-#: issuetracker.php:681
+#: issuetracker.php:691
 #@ issuetracker
 msgid "Submit"
 msgstr "Speichern"
 
-#: issuetracker.php:884
+#: issuetracker.php:888
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Sie verfügen nicht über ausreichende Berechtigungen, um diese Seite zu betreten."
 
-#: issuetracker.php:900
+#: issuetracker.php:904
 #@ menu-test
 msgid "Issue Tracker Settings"
 msgstr "Issue Tracker Einstellungen"
 
-#: issuetracker.php:985
+#: issuetracker.php:989
 #@ issuetracker
 msgid "Save Changes"
 msgstr "Speichere Änderungen"
@@ -99,23 +99,38 @@ msgstr ""
 msgid "error"
 msgstr ""
 
-#: issuetracker.php:731
+#: issuetracker.php:668
 #@ issuetracker
 msgid "Summary:"
 msgstr "Zusammenfassung:"
 
-#: issuetracker.php:732
+#: issuetracker.php:669
 #@ issuetracker
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: issuetracker.php:733
+#: issuetracker.php:670
 #@ issuetracker
 msgid "Type:"
 msgstr "Typ:"
 
-#: issuetracker.php:734
+#: issuetracker.php:671
 #@ issuetracker
 msgid "Status:"
 msgstr "Status:"
+
+#: issuetracker.php:672
+#@ issuetracker
+msgid "Category:"
+msgstr "Kategorie:"
+
+#: issuetracker.php:673
+#@ issuetracker
+msgid "Assignee:"
+msgstr "Zugewiesen:"
+
+#: issuetracker.php:674
+#@ issuetracker
+msgid "Attachment:"
+msgstr "Anhang:"
 
