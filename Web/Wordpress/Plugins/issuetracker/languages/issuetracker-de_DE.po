@@ -10,78 +10,112 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
-"X-Textdomain-Support: yes\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: \n"
+"X-Poedit-Bookmarks: \n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
 
-#@ default
-#: issuetracker.php:52
+#: issuetracker.php:56
+#@ issuetracker
 msgid "Sorry you don't have the privileges to do this!"
 msgstr "Entschuldigung aber du hast keine Rechte dies zu tun!"
 
-#@ default
-#: issuetracker.php:589
+#: issuetracker.php:618
+#@ issuetracker
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
 msgstr "Die hochgeladene Datei überschreitet die upload_max_filesize in der php.ini."
 
-#@ default
-#: issuetracker.php:592
+#: issuetracker.php:621
+#@ issuetracker
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
 msgstr "Die hochgeladene Datei überschreitet die MAX_FILE_SIZE-Direktive, die im HTML-Formular angegeben wurde."
 
-#@ default
-#: issuetracker.php:595
+#: issuetracker.php:624
+#@ issuetracker
 msgid "The uploaded file was only partially uploaded."
 msgstr "Die hochgeladene Datei wurde nur teilweise hochgeladen."
 
-#@ default
-#: issuetracker.php:598
+#: issuetracker.php:627
+#@ issuetracker
 msgid "No file was uploaded."
 msgstr "Es wurde keine Datei hochgeladen."
 
-#@ default
-#: issuetracker.php:601
+#: issuetracker.php:630
+#@ issuetracker
 msgid "Missing a temporary folder."
 msgstr "Ein temporäres Verzeichnis fehlt."
 
-#@ default
-#: issuetracker.php:604
+#: issuetracker.php:633
+#@ issuetracker
 msgid "Can't write to disk."
 msgstr "Kann nicht auf die Festplatte schreiben."
 
-#@ default
-#: issuetracker.php:641
+#: issuetracker.php:670
+#@ issuetracker
 msgid "Change"
 msgstr "Ändere"
 
-#@ default
-#: issuetracker.php:642
+#: issuetracker.php:671
+#@ issuetracker
 msgid "Save changes"
 msgstr "Speichere Änderungen"
 
-#@ default
-#: issuetracker.php:651
+#: issuetracker.php:680
+#@ issuetracker
 msgid "Submit new issue"
 msgstr "Neue Aufgabe anlegen"
 
-#@ default
-#: issuetracker.php:652
+#: issuetracker.php:681
+#@ issuetracker
 msgid "Submit"
 msgstr "Speichern"
 
+#: issuetracker.php:884
 #@ default
-#: issuetracker.php:847
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Sie verfügen nicht über ausreichende Berechtigungen, um diese Seite zu betreten."
 
+#: issuetracker.php:900
 #@ menu-test
-#: issuetracker.php:863
 msgid "Issue Tracker Settings"
 msgstr "Issue Tracker Einstellungen"
 
-#@ default
-#: issuetracker.php:948
+#: issuetracker.php:985
+#@ issuetracker
 msgid "Save Changes"
 msgstr "Speichere Änderungen"
+
+#: issuetracker.php:639
+#@ default
+msgid "Error: "
+msgstr ""
+
+#: issuetracker.php:640
+#@ default
+msgid "error"
+msgstr ""
+
+#: issuetracker.php:731
+#@ issuetracker
+msgid "Summary:"
+msgstr "Zusammenfassung:"
+
+#: issuetracker.php:732
+#@ issuetracker
+msgid "Description:"
+msgstr "Beschreibung:"
+
+#: issuetracker.php:733
+#@ issuetracker
+msgid "Type:"
+msgstr "Typ:"
+
+#: issuetracker.php:734
+#@ issuetracker
+msgid "Status:"
+msgstr "Status:"
 

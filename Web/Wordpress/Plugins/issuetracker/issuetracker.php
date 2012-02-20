@@ -20,6 +20,7 @@ register_activation_hook(__FILE__, 'it_install');
 load_plugin_textdomain("issuetracker", false, 'issuetracker/languages/');
 
 //TODO Doppelter Dateiupload führt zu nicht upload
+//TODO //uncomment avatar einbauen
 
 class issuetracker {
 
@@ -428,23 +429,30 @@ HTML;
             
             $comment->comment_body = ($comment->comment_body);
             $comment->comment_time = date('F jS, Y @ h:i a', $comment->comment_time);
-            $avatar = $this->get_gravatar($comment->user_email, 40, 404, 'g', true, array('class' => 'avatar avatar-40 photo'));
             $delete_url = $this->build_url('do=it_qdo&qdo=delete_comment&post_id=' . $post->ID . '&comment_id=' . $comment->comment_id);
             $delete_link = current_user_can('manage_options') ? " <a class='comment-edit-link' href='$delete_url'>(Delete)</a>" : '';
             $comment->comment_body = nl2br($comment->comment_body);
+            
             $content .= <<<HTML
 		<li class="comment"> 
 			<div> 
-				<div class="comment-author"> 
-					{$avatar}
+				<div class="comment-author"> 				
 					<cite>{$comment->display_name}</cite>	
 				</div>
 				<div class="comment-meta"><a href="javascript:void(0);">{$comment->comment_time}</a>$delete_link</div>
 				<div class="comment-body">{$comment->comment_body}</div>
-
+HTML;
+                                
+                                if($comment->comment_attachment)
+                                {
+                                    $content .= <<<HTML
                                 <hr>
-                                <label>Attachment: </label>
-                                    <span><a href="$attachmentLinkComment">{$comment->comment_attachment}</a></span>
+                                    <div class="comment-attachment">
+                                Attachment: <a href="$attachmentLinkComment">{$comment->comment_attachment}</a>
+                                        </div>
+HTML;
+                                }
+            $content .=<<<HTML
 			</div>
 		</li>
 HTML;
@@ -656,6 +664,13 @@ HTML;
     function it_changes_form($tracker_id, $issue = null) {
         global $wpdb, $post;
 
+        //Translation vars
+        $__summary=__("Summary:", 'issuetracker');
+        $__description=__("Description:", 'issuetracker');
+        $__type=__("Type:", 'issuetracker');
+        $__status=__("Status:", 'issuetracker');
+        
+        //
         $user = wp_get_current_user();
 
         if ($issue) {
@@ -718,21 +733,21 @@ HTML;
                 $sel = $user->ID == $issue->issue_assignee ? ' selected' : '';
                 $users_options .= "<option value={$user->ID}{$sel}>{$user->display_name}</option>";
             }
-
+            
             $issue_options = <<<OPTS
-<p ><label for="summary">Summary:</label><br/><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
-<p ><label for="description">Description:</label><br/><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
-<p ><labelfor="type">Type</label><select name="type" id="type" >{$types_options}</select></p>
-<p ><label for="status">Status</label><select name="status" id="status" >{$status_options}</select></p>
+<p ><label for="summary">{$__summary}</label><br/><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
+<p ><label for="description">{$__description}:</label><br/><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
+<p ><labelfor="type">{$__type}</label><select name="type" id="type" >{$types_options}</select></p>
+<p ><label for="status">{$__status}</label><select name="status" id="status" >{$status_options}</select></p>
 <p ><label for="category">Category</label><select name="category" id="category" >{$categories_options}</select></p>
 <p ><label for="assignee">Assignee</label><select name="assignee" id="assignee" >{$users_options}</select></p>
 OPTS;
-        } else if (!$issue->issue_id) {
+        } else if (!$issue->issue_id) {           
             $issue_options = <<<OPTS
-<p ><label for="summary">Summary</label><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
-<p ><label for="description">Description</label><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
-<p ><labelfor="type">Type</label><select name="type" id="type" >{$types_options}</select></p>
-<p ><label for="category">{__(Category)}</label><select name="category" id="category" >{$categories_options}</select></p>
+<p ><label for="summary">{$__summary}</label><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
+<p ><label for="description">{$__description}</label><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
+<p ><labelfor="type">{$__type}</label><select name="type" id="type" >{$types_options}</select></p>
+<p ><label for="category">Category</label><select name="category" id="category" >{$categories_options}</select></p>
 OPTS;
         }
         $action = $this->build_url('do=it_qdo&qdo=save_issue&post_id=' . $post->ID);
