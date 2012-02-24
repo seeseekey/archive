@@ -19,9 +19,6 @@ register_activation_hook(__FILE__, 'it_install');
 //load language files
 load_plugin_textdomain("issuetracker", false, 'issuetracker/languages/');
 
-//TODO Doppelter Dateiupload führt zu nicht upload
-//TODO //uncomment avatar einbauen
-
 class issuetracker {
 
 //Vars
@@ -622,7 +619,7 @@ HTML;
             $filename;
 
             if ($_FILES['userfile']["name"]) {
-                $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
+                $this->putUploadIntoFolder($_FILES, $success, $message, &$filename);
             } else { //no file to upload
                 $success = true;
             }
@@ -684,8 +681,30 @@ HTML;
                     $uploaddir = WP_CONTENT_DIR . "/issuetracker/";
                     $uploadfile = $uploaddir . $filename;
 
+                    //check if file with this name exist
+                    if(file_exists($uploadfile))
+                    {
+                        $path_parts = pathinfo($uploadfile);
+                        $i=2;
+                        
+                        while(true)
+                        {           
+                            $filename=$path_parts['filename'] . '-' . $i .$path_parts['extension'];
+                            $newFilename=$uploaddir . $filename;
+                            
+                            if(file_exists($newFilename)==false)
+                            {
+                                $uploadfile=$newFilename;
+                                break;
+                            }
+                            else
+                            {
+                                $i++;
+                            }
+                        }
+                    }
+                    
                     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
-//TODO Check auf Dateiüberschreibung
                         $success = true;
                     } else {
                         $this->message = __("Possible file upload attack!", 'issuetracker');
@@ -844,6 +863,7 @@ HTML;
 
         foreach ($issues as $issue) {
             if($issue->status_strike) continue;
+            
             $strike = $issue->status_strike ? 'strike' : '';
             $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
 												WHERE user_id = %d AND issue_id = %d", $user->ID, $issue->issue_id));
