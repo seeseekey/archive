@@ -915,20 +915,25 @@ HTML;
         }
 
         echo '<div class="wrap">';
-        echo "<h2>" . __('Issue Tracker Settings', 'menu-test') . "</h2>";
+        echo "<h2>" . __('Issue Tracker Settings', 'issuetracker') . "</h2>";
         ?>
 
         <form name="" method="post" action="">
             <input type="hidden" name="submit" value="1">
-            <h3>Types</h3>
-            <a href="" onclick="return append_new_type();">Add New</a>
+            <h3><?php echo $this->__type; ?></h3>
+            <a href="" onclick="return append_new_type();"><?php echo __('Add new', 'issuetracker') ?></a>
             <table class="form-table" id="types_table"> 
         <?php
         $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_type WHERE type_tracker = 1 ORDER BY type_order ASC, type_id ASC");
         foreach ($types as $type) {
             ?>
                     <tr valign="top"> 
-                        <td class="dragger"></td><td><input name="type_names[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo stripslashes($type->type_name) ?>" /><input name="type_colours[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo $type->type_colour ?>" /> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
+                        <td class="dragger"></td>
+                        <td>
+                            <input name="type_names[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo stripslashes($type->type_name) ?>" />
+                            <input name="type_colours[<?php echo $type->type_id ?>]" type="text" id="" value="<?php echo $type->type_colour ?>" /> 
+                            <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
+                        </td> 
                     </tr>	
             <?php
         }
@@ -936,16 +941,15 @@ HTML;
             </table>
             <script type="text/javascript" charset="utf-8">
                 function append_new_type() {
-                    new_row = "<tr valign='top'><td class='dragger'></td><td><input name='type_names[]' type='text' /><input name='type_colours[]' type='text' /><a onclick='jQuery(this).parent().parent().remove(); return false;' href=''>delete</a></td></tr>";
+                    new_row = "<tr valign='top'><td class='dragger'></td><td><input name='type_names[]' type='text' /><input name='type_colours[]' type='text' /><a onclick='jQuery(this).parent().parent().remove(); return false;' href=''><?php echo __('delete', 'issuetracker'); ?></a></td></tr>";
                     jQuery('#types_table').append(new_row);
                     jQuery("#types_table").tableDnD()
-                    // jQuery("#status_table").tableDnD()
                     return false;
                 }
             </script>
 
-            <h3>Status</h3>
-            <a href="" onclick="return append_new_status();">Add New</a>
+            <h3><?php echo $this->__status; ?></h3>
+            <a href="" onclick="return append_new_status();"><?php echo __('Add new', 'issuetracker') ?></a>
 
             <table class="form-table" id="status_table"> 
         <?php
@@ -954,7 +958,12 @@ HTML;
             ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
-                        <td><input name="status_names[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo stripslashes($status->status_name) ?>" /><input name="status_colours[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo $status->status_colour ?>" /> <input type="checkbox" name="status_strikes[<?php echo $status->status_id ?>]" <?php echo $status->status_strike ? 'checked' : '' ?>> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
+                        <td>
+                            <input name="status_names[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo stripslashes($status->status_name) ?>" />
+                            <input name="status_colours[<?php echo $status->status_id ?>]" type="text" id="" value="<?php echo $status->status_colour ?>" /> 
+                            <input type="checkbox" name="status_strikes[<?php echo $status->status_id ?>]" <?php echo $status->status_strike ? 'checked' : '' ?>> 
+                            <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
+                        </td> 
                     </tr>	
             <?php
         }
@@ -963,16 +972,15 @@ HTML;
 
             <script type="text/javascript" charset="utf-8">
                 function append_new_status() {
-                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="status_names[]" type="text" /><input name="status_colours[]" type="text" /> <input type="checkbox" name="status_strikes[]"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td></tr>';
+                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="status_names[]" type="text" /><input name="status_colours[]" type="text" /> <input type="checkbox" name="status_strikes[]"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a></td></tr>';
                     jQuery('#status_table').append(new_row);
-                    // jQuery("#types_table").tableDnD()
                     jQuery("#status_table").tableDnD()
                     return false;
                 }
             </script>
 
-            <h3>{$this->__category}</h3>
-            <a href="" onclick="return append_new_category();">Add New</a>
+            <h3><?php echo $this->__category; ?></h3>
+            <a href="" onclick="return append_new_category();"><?php echo __('Add new', 'issuetracker') ?></a>
 
             <table class="form-table" id="category_table"> 
         <?php
@@ -981,7 +989,10 @@ HTML;
             ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
-                        <td><input name="category_names[<?php echo $category->category_id ?>]" type="text" id="" value="<?php echo stripslashes($category->category_name) ?>" /><input name="category_colours[<?php echo $category->category_id ?>]" type="text" id="" value="<?php echo $category->category_colour ?>" /> <input type="checkbox" name="category_strikes[<?php echo $category->category_id ?>]" <?php echo $category->category_strike ? 'checked' : '' ?>> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
+                        <td>
+                            <input name="category_names[<?php echo $category->category_id ?>]" type="text" id="" value="<?php echo stripslashes($category->category_name) ?>" />
+                            <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
+                        </td> 
                     </tr>
             <?php
         }
@@ -990,9 +1001,8 @@ HTML;
 
             <script type="text/javascript" charset="utf-8">
                 function append_new_category() {
-                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="category_names[]" type="text" /><input name="category_colours[]" type="text" /> <input type="checkbox" name="category_strikes[]"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td></tr>';
+                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="category_names[]" type="text" /><input name="category_colours[]" type="text" /> <input type="checkbox" name="category_strikes[]"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a></td></tr>';
                     jQuery('#category_table').append(new_row);
-                    // jQuery("#types_table").tableDnD()
                     jQuery("#category_table").tableDnD()
                     return false;
                 }
@@ -1004,14 +1014,14 @@ HTML;
             </p>
         </form>
 
-        <h3>Import from Google Code Issue Tracker CSV</h3><br/>
+        <h3><?php echo __('Import from Google Code Issue Tracker CSV', 'issuetracker') ?></h3><br/>
         <form enctype="multipart/form-data" action="" method="post">
         <?php wp_nonce_field('import-google-code-csv'); ?>
             <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
-            Select a file containing the CSV export file: <input name="userfile" type="file" />
+            <?php echo __('Select a file containing the CSV export file', 'issuetracker') ?>: <input name="userfile" type="file" />
             <p class="submit">
                 <input type="hidden" name="action" value="import-google-code-csv" />
-                <input type="submit" value="Import &raquo;" class="button-primary" />
+                <input type="submit" value="<?php echo __('Import', 'issuetracker') ?>: &raquo;" class="button-primary" />
             </p>
         </form>
 

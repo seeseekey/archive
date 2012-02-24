@@ -51,7 +51,6 @@ function it_install() {
 				status_colour text COLLATE utf8_general_ci,
 				status_strike int(1),
 				status_order int(3),
-				status_visible int(1),
 				UNIQUE KEY status_id (status_id)
 			);";
 
@@ -63,7 +62,7 @@ function it_install() {
 				category_tracker int(3),
 				category_name text COLLATE utf8_general_ci,
 				category_order int(3),
-				UNIQUE KEY status_id (category_id)
+				UNIQUE KEY category_id (category_id)
 			);";
 
     dbDelta($sql);
