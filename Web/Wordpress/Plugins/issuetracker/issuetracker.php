@@ -37,9 +37,9 @@ class issuetracker {
     var $__reporter = "";
     var $__comments = "";
     var $__comment = "";
-    
+    var $__delete = "";
     //Datestring
-    var $dateFormat="";
+    var $dateFormat = "";
 
 //Constructor
     function issuetracker() {
@@ -56,12 +56,11 @@ class issuetracker {
         $this->__reporter = __("Reporter", 'issuetracker');
         $this->__comments = __("comments", 'issuetracker');
         $this->__comment = __("comment", 'issuetracker');
+        $this->__delete = __("Delete", 'issuetracker');
 
         //Datestring
-        $this->dateFormat='d.m.Y - h:i';
+        $this->dateFormat = 'd.m.Y - H:i:s';
         //$this->dateFormat='F jS, Y @ h:i a';
-
-
 # filter the content -- match the <!--issuetracker--> and work on it
         add_filter('the_content', array(&$this, 'it_output'), 999);
 
@@ -109,7 +108,7 @@ class issuetracker {
 											(status_id, status_name, status_colour, status_strike, status_tracker, status_order)
 											VALUES (%d, %s, %s, %d, 1, %d)", $k, $_POST['status_names'][$k], $_POST['status_colours'][$k], isset($_POST['status_strikes'][$k]) ? 1 : 0, $i++));
                         }
-                        
+
                     //Category
                     $i = 1;
                     $wpdb->query("DELETE FROM {$wpdb->prefix}it_category");
@@ -118,7 +117,7 @@ class issuetracker {
                             $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_category
 											(category_id, category_name, category_tracker, category_order)
 											VALUES (%d, %s, 1, %d)", $k, $_POST['category_names'][$k], $i++));
-                        }      
+                        }
                 }
 
                 $this->message = __('Settings saved.', 'issuetracker');
@@ -246,7 +245,7 @@ class issuetracker {
                     $id = $wpdb->get_var($wpdb->prepare("SELECT comment_issue FROM {$wpdb->prefix}it_comment
 												WHERE comment_id = %d", $this->get_request('comment_id')));
                     $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}it_comment WHERE comment_id = %d", $this->get_request('comment_id')));
-                    it_redirect($this->build_url('do=view_issue&issue=' . $id, $post_id));
+                    $this->it_redirect($this->build_url('do=view_issue&issue=' . $id, $post_id));
                     break;
                 case 'save_issue':
 // will take all other params from _REQUEST
@@ -401,7 +400,7 @@ class issuetracker {
         if (current_user_can('manage_options')) {
             $delete_link = '
 		<div>
-			<label><a href="' . $this->build_url('do=it_qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">Delete</a></label>
+			<label><a href="' . $this->build_url('do=it_qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">' . $this->__delete . '</a></label>
 		</div>';
         }
 
@@ -475,27 +474,35 @@ HTML;
             $comment->comment_body = ($comment->comment_body);
             $comment->comment_time = date($this->dateFormat, $comment->comment_time);
             $delete_url = $this->build_url('do=it_qdo&qdo=delete_comment&post_id=' . $post->ID . '&comment_id=' . $comment->comment_id);
-            $delete_link = current_user_can('manage_options') ? " <a class='comment-edit-link' href='$delete_url'>(Delete)</a>" : '';
+            $delete_link = current_user_can('manage_options') ? " <a class='comment-edit-link' href='$delete_url'>({$this->__delete})</a>" : '';
             $comment->comment_body = nl2br($comment->comment_body);
 
             $content .= <<<HTML
 		<li class="comment"> 
 			<div> 
 				<div class="comment-author"> 				
-					<cite>{$comment->display_name}</cite>	
-				</div>
-				<div class="comment-meta"><a href="javascript:void(0);">{$comment->comment_time}</a>$delete_link</div>
+					<cite>{$comment->display_name}</cite> / {$comment->comment_time}$delete_link	
+				</div>				
+HTML;
+
+
+
+
+            $content .= <<<HTML
 				<div class="comment-body">{$comment->comment_body}</div>
 HTML;
 
             if ($comment->comment_attachment) {
                 $content .= <<<HTML
-                                <hr/>
+                                    <p>
                                     <div class="comment-attachment">
                                 {$this->__attachment}: <a href="$attachmentLinkComment">{$comment->comment_attachment}</a>
                                         </div>
+                                        </p>
 HTML;
             }
+
+
             $content .=<<<HTML
 			</div>
 		</li>
@@ -682,28 +689,23 @@ HTML;
                     $uploadfile = $uploaddir . $filename;
 
                     //check if file with this name exist
-                    if(file_exists($uploadfile))
-                    {
+                    if (file_exists($uploadfile)) {
                         $path_parts = pathinfo($uploadfile);
-                        $i=2;
-                        
-                        while(true)
-                        {           
-                            $filename=$path_parts['filename'] . '-' . $i .$path_parts['extension'];
-                            $newFilename=$uploaddir . $filename;
-                            
-                            if(file_exists($newFilename)==false)
-                            {
-                                $uploadfile=$newFilename;
+                        $i = 2;
+
+                        while (true) {
+                            $filename = $path_parts['filename'] . '-' . $i . $path_parts['extension'];
+                            $newFilename = $uploaddir . $filename;
+
+                            if (file_exists($newFilename) == false) {
+                                $uploadfile = $newFilename;
                                 break;
-                            }
-                            else
-                            {
+                            } else {
                                 $i++;
                             }
                         }
                     }
-                    
+
                     if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
                         $success = true;
                     } else {
@@ -862,8 +864,9 @@ HTML;
         $issues = $this->it_get_issues($tracker_id);
 
         foreach ($issues as $issue) {
-            if($issue->status_strike) continue;
-            
+            if ($issue->status_strike)
+                continue;
+
             $strike = $issue->status_strike ? 'strike' : '';
             $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
 												WHERE user_id = %d AND issue_id = %d", $user->ID, $issue->issue_id));
@@ -1014,9 +1017,9 @@ HTML;
                             <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
                         </td> 
                     </tr>
-            <?php
-        }
-        ?>
+                    <?php
+                }
+                ?>
             </table>
 
             <script type="text/javascript" charset="utf-8">
@@ -1038,7 +1041,7 @@ HTML;
         <form enctype="multipart/form-data" action="" method="post">
         <?php wp_nonce_field('import-google-code-csv'); ?>
             <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
-            <?php echo __('Select a file containing the CSV export file', 'issuetracker') ?>: <input name="userfile" type="file" />
+        <?php echo __('Select a file containing the CSV export file', 'issuetracker') ?>: <input name="userfile" type="file" />
             <p class="submit">
                 <input type="hidden" name="action" value="import-google-code-csv" />
                 <input type="submit" value="<?php echo __('Import', 'issuetracker') ?>: &raquo;" class="button-primary" />
