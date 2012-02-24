@@ -157,13 +157,13 @@ class issuetracker {
 
 //check file spoofing
                         if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-                            $message = 'Stop trying to spoof the $_FILES array hacker!';
+                            $message = __('Stop trying to spoof the $_FILES array hacker!', 'issuetracker');
                         } else {
                             $handle = fopen($_FILES['userfile']['tmp_name'], "r");
                             $csvlines = $this->read_csv($handle);
 //$mime_file_lines = file($_FILES['userfile']['tmp_name']);
                             if (!$csvlines) {
-                                $message = 'Invalid file format';
+                                $message = __('Invalid file format', 'issuetracker');
                             }
                         }
 
@@ -668,8 +668,8 @@ HTML;
             }
 
             if (isset($message)) {
-                $this->message = __('Error: ') . $message;
-                $this->message_class = __('error');
+                $this->message = __('Error', 'issuetracker') . ': ' . $message;
+                $this->message_class = 'error';
             } else {
 
 //check file spoofing
@@ -919,7 +919,7 @@ HTML;
 
 //must check that the user has the required capability 
         if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.'));
+            wp_die(__('You do not have sufficient permissions to access this page.', 'issuetracker'));
         }
 
         if (!current_user_can('manage_options')) {

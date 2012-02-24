@@ -19,85 +19,81 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: issuetracker.php:85
+#: issuetracker.php:88
 #@ issuetracker
 msgid "Sorry you don't have the privileges to do this!"
 msgstr "Entschuldigung aber du hast keine Rechte dies zu tun!"
 
-#: issuetracker.php:635
+#: issuetracker.php:133
+#: issuetracker.php:650
 #@ issuetracker
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
 msgstr "Die hochgeladene Datei überschreitet die upload_max_filesize in der php.ini."
 
-#: issuetracker.php:638
+#: issuetracker.php:136
+#: issuetracker.php:653
 #@ issuetracker
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
 msgstr "Die hochgeladene Datei überschreitet die MAX_FILE_SIZE-Direktive, die im HTML-Formular angegeben wurde."
 
-#: issuetracker.php:641
+#: issuetracker.php:139
+#: issuetracker.php:656
 #@ issuetracker
 msgid "The uploaded file was only partially uploaded."
 msgstr "Die hochgeladene Datei wurde nur teilweise hochgeladen."
 
-#: issuetracker.php:644
+#: issuetracker.php:142
+#: issuetracker.php:659
 #@ issuetracker
 msgid "No file was uploaded."
 msgstr "Es wurde keine Datei hochgeladen."
 
-#: issuetracker.php:647
+#: issuetracker.php:145
+#: issuetracker.php:662
 #@ issuetracker
 msgid "Missing a temporary folder."
 msgstr "Ein temporäres Verzeichnis fehlt."
 
-#: issuetracker.php:650
+#: issuetracker.php:148
+#: issuetracker.php:665
 #@ issuetracker
 msgid "Can't write to disk."
 msgstr "Kann nicht auf die Festplatte schreiben."
 
-#: issuetracker.php:687
+#: issuetracker.php:724
 #@ issuetracker
 msgid "Change"
 msgstr "Ändere"
 
-#: issuetracker.php:688
+#: issuetracker.php:725
 #@ issuetracker
 msgid "Save changes"
 msgstr "Speichere Änderungen"
 
-#: issuetracker.php:697
+#: issuetracker.php:734
 #@ issuetracker
 msgid "Submit new issue"
 msgstr "Neue Aufgabe anlegen"
 
-#: issuetracker.php:698
+#: issuetracker.php:735
 #@ issuetracker
 msgid "Submit"
 msgstr "Speichern"
 
-#: issuetracker.php:896
-#@ default
+#: issuetracker.php:922
+#@ issuetracker
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Sie verfügen nicht über ausreichende Berechtigungen, um diese Seite zu betreten."
 
-#: issuetracker.php:912
-#@ menu-test
+#: issuetracker.php:938
+#@ issuetracker
 msgid "Issue Tracker Settings"
 msgstr "Issue Tracker Einstellungen"
 
-#: issuetracker.php:997
+#: issuetracker.php:1033
 #@ issuetracker
 msgid "Save Changes"
 msgstr "Speichere Änderungen"
-
-#: issuetracker.php:656
-#@ default
-msgid "Error: "
-msgstr ""
-
-#: issuetracker.php:657
-#@ default
-msgid "error"
-msgstr ""
 
 #: issuetracker.php:57
 #@ issuetracker
@@ -158,4 +154,67 @@ msgstr "Gemeldet am"
 #@ issuetracker
 msgid "Reporter"
 msgstr "Reporter"
+
+#: issuetracker.php:124
+#@ issuetracker
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: issuetracker.php:154
+#: issuetracker.php:671
+#@ issuetracker
+msgid "Error"
+msgstr "Fehler"
+
+#: issuetracker.php:188
+#@ issuetracker
+msgid "Import completed."
+msgstr "Import abgeschlossen."
+
+#: issuetracker.php:710
+#@ issuetracker
+msgid "Possible file upload attack!"
+msgstr "Mögliche Dateiupload Attacke!"
+
+#: issuetracker.php:944
+#: issuetracker.php:972
+#: issuetracker.php:1003
+#@ issuetracker
+msgid "Add new"
+msgstr "Neuen Eintrag hinzufügen"
+
+#: issuetracker.php:955
+#: issuetracker.php:964
+#: issuetracker.php:985
+#: issuetracker.php:995
+#: issuetracker.php:1014
+#: issuetracker.php:1024
+#@ issuetracker
+msgid "delete"
+msgstr "löschen"
+
+#: issuetracker.php:1037
+#@ issuetracker
+msgid "Import from Google Code Issue Tracker CSV"
+msgstr "Importiere vom Google Code Issue Tracker CSV"
+
+#: issuetracker.php:1041
+#@ issuetracker
+msgid "Select a file containing the CSV export file"
+msgstr "Datei auswählen welche den CSV Export enthält"
+
+#: issuetracker.php:1044
+#@ issuetracker
+msgid "Import"
+msgstr "Importieren"
+
+#: issuetracker.php:160
+#@ issuetracker
+msgid "Stop trying to spoof the $_FILES array hacker!"
+msgstr "Hört auf zu versuchen, das $ _FILES Array zu manipulieren!"
+
+#: issuetracker.php:166
+#@ issuetracker
+msgid "Invalid file format"
+msgstr "Ungültiges Dateiformat."
 
