@@ -124,8 +124,8 @@ class issuetracker {
                         }      
                 }
 
-                $this->message = 'Settings saved.';//_e('Settings saved.', 'issuetracker');
-                $this->message_class = 'Settings updated.';//_e('Settings updated.', 'issuetracker');
+                $this->message = __('Settings saved.', 'issuetracker');
+                $this->message_class = 'updated';
             } elseif (isset($_POST["action"]) && "import-google-code-csv" == $_POST["action"]) { //import google csv
 //check_admin_referer('add-mime-from-file');
                 if (isset($_FILES['userfile'])) {
@@ -133,28 +133,28 @@ class issuetracker {
 //Check Error Codes
                         switch ($_FILES['userfile']['error']) {
                             case UPLOAD_ERR_INI_SIZE:
-                                $message = 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
+                                $message = __('The uploaded file exceeds the upload_max_filesize directive in php.ini.', 'issuetracker');
                                 break;
                             case UPLOAD_ERR_FORM_SIZE:
-                                $message = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
+                                $message = __('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.', 'issuetracker');
                                 break;
                             case UPLOAD_ERR_PARTIAL:
-                                $message = 'The uploaded file was only partially uploaded.';
+                                $message = __('The uploaded file was only partially uploaded.', 'issuetracker');
                                 break;
                             case UPLOAD_ERR_NO_FILE:
-                                $message = 'No file was uploaded.';
+                                $message = __('No file was uploaded.', 'issuetracker');
                                 break;
                             case UPLOAD_ERR_NO_TMP_DIR:
-                                $message = 'Missing a temporary folder.';
+                                $message = __('Missing a temporary folder.', 'issuetracker');
                                 break;
                             case UPLOAD_ERR_CANT_WRITE:
-                                $message = 'Can\'t write to disk.';
+                                $message = __('Can\'t write to disk.', 'issuetracker');
                                 break;
                         }
                     }
 
                     if (isset($message)) {
-                        $this->message = 'Error: ' . $message;
+                        $this->message = __('Error', 'issuetracker') . ': ' . $message;
                         $this->message_class = 'error';
                     } else {
 
@@ -188,7 +188,7 @@ class issuetracker {
                         }
 
 //Message
-                        $this->message = 'Import completed.';
+                        $this->message = __('Import completed.', 'issuetracker');
                         $this->message_class = 'updated';
                     }
                 }
@@ -688,7 +688,7 @@ HTML;
 //TODO Check auf Dateiüberschreibung
                         $success = true;
                     } else {
-                        $this->message = "Possible file upload attack!";
+                        $this->message = __("Possible file upload attack!", 'issuetracker');
                         $this->message_class = 'error';
                     }
                 }
