@@ -93,6 +93,7 @@ class issuetracker {
         } else {
             if (isset($_POST["action"]) && "save-settings" == $_POST["action"]) { //save settings
                 if (isset($_POST['submit']) && $_POST['submit'] == '1') {
+                    //Types
                     $i = 1;
                     $wpdb->query("DELETE FROM {$wpdb->prefix}it_type");
                     if (isset($_POST['type_names']))
@@ -102,6 +103,7 @@ class issuetracker {
 											VALUES (%d, %s, %s, 1, %d)", $k, $_POST['type_names'][$k], $_POST['type_colours'][$k], $i++));
                         }
 
+                    //Status
                     $i = 1;
                     $wpdb->query("DELETE FROM {$wpdb->prefix}it_status");
                     if (isset($_POST['status_names']))
@@ -110,10 +112,20 @@ class issuetracker {
 											(status_id, status_name, status_colour, status_strike, status_tracker, status_order)
 											VALUES (%d, %s, %s, %d, 1, %d)", $k, $_POST['status_names'][$k], $_POST['status_colours'][$k], isset($_POST['status_strikes'][$k]) ? 1 : 0, $i++));
                         }
+                        
+                    //Category
+                    $i = 1;
+                    $wpdb->query("DELETE FROM {$wpdb->prefix}it_category");
+                    if (isset($_POST['category_names']))
+                        foreach ($_POST['category_names'] as $k => $v) {
+                            $wpdb->query($wpdb->prepare("INSERT INTO {$wpdb->prefix}it_category
+											(category_id, category_name, category_tracker, category_order)
+											VALUES (%d, %s, 1, %d)", $k, $_POST['category_names'][$k], $i++));
+                        }      
                 }
 
-                $this->message = 'Settings saved.';
-                $this->message_class = 'updated';
+                $this->message = 'Settings saved.';//_e('Settings saved.', 'issuetracker');
+                $this->message_class = 'Settings updated.';//_e('Settings updated.', 'issuetracker');
             } elseif (isset($_POST["action"]) && "import-google-code-csv" == $_POST["action"]) { //import google csv
 //check_admin_referer('add-mime-from-file');
                 if (isset($_FILES['userfile'])) {
@@ -483,7 +495,7 @@ HTML;
                 $content .= <<<HTML
                                 <hr/>
                                     <div class="comment-attachment">
-                                {$this->__attachment} <a href="$attachmentLinkComment">{$comment->comment_attachment}</a>
+                                {$this->__attachment}: <a href="$attachmentLinkComment">{$comment->comment_attachment}</a>
                                         </div>
 HTML;
             }
@@ -778,7 +790,7 @@ OPTS;
 		{$issue_options}
 		
 		<p>
-		{$this->__attachment}<br/>
+		{$this->__attachment}:<br/>
 		<input type="hidden" name="MAX_FILE_SIZE" value="3000000"> <!-- 3 MB -->
 		<input id="attachment" name="userfile" type="file" />
 		</p>
@@ -988,7 +1000,7 @@ HTML;
 
             <script type="text/javascript" charset="utf-8">
                 function append_new_category() {
-                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="category_names[]" type="text" /><input name="category_colours[]" type="text" /> <input type="checkbox" name="category_strikes[]"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a></td></tr>';
+                    new_row = '<tr valign="top"><td class="dragger"></td><td><input name="category_names[]" type="text" /> <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a></td></tr>';
                     jQuery('#category_table').append(new_row);
                     jQuery("#category_table").tableDnD()
                     return false;
