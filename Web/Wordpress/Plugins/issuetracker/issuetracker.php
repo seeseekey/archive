@@ -723,7 +723,7 @@ HTML;
         $user = wp_get_current_user();
 
         if ($issue) {
-            $form_h3 = __('Change', 'issuetracker');
+            $form_h3 = "";
             $form_submit = __('Save changes', 'issuetracker');
         } else {
             $issue = new stdClass;
@@ -761,7 +761,7 @@ HTML;
 
         if ($issue->issue_id) {
             $comment_area = <<<HTML
-		<p ><label for="comment">Comment:</label><br/><textarea id="comment" name="comment" cols="45" rows="8" ></textarea></p>	
+		<p ><label for="comment">{$this->__comment}:</label><br/><textarea id="comment" name="comment" cols="45" rows="8" ></textarea></p>	
                     
 		<p>
 		{$this->__attachment}:<br/>
@@ -793,7 +793,6 @@ HTML;
             }
 
             $issue_options = <<<OPTS
-            <hr/>
 <p ><label for="summary">{$this->__summary}:</label><br/><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
 <p ><label for="description">{$this->__description}:</label><br/><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
 <p ><labelfor="type">{$this->__type}:</label><select name="type" id="type" >{$types_options}</select></p>
