@@ -409,7 +409,7 @@ class issuetracker {
         $issue->issue_summary = ($issue->issue_summary);
         $issue->issue_description_bred = nl2br($issue->issue_description);
         $star = !$user->ID ? '' : <<<STAR
-	<a title="Click to toggle star" href="javascript:toggle_star({$issue->issue_id})"><img id="star_{$issue->issue_id}" src="{$plugin_url}images/star_{$onoff}.gif" /></a>
+	<a href="javascript:toggle_star({$issue->issue_id})"><img id="star_{$issue->issue_id}" src="{$plugin_url}images/star_{$onoff}.gif" /></a>
 STAR;
         $content = <<<HTML
 	<div class="issuetracker issues" id="response-div">
@@ -509,8 +509,8 @@ HTML;
 HTML;
         }
         $content .= '</ol></div>';
+
         if ($user->ID) {
-            $content .= '<hr />';
             $content .= $this->it_changes_form($issue->issue_tracker, $issue);
         }
 
@@ -626,7 +626,7 @@ HTML;
             $filename;
 
             if ($_FILES['userfile']["name"]) {
-                $this->putUploadIntoFolder($_FILES, $success, $message, &$filename);
+                $this->putUploadIntoFolder($_FILES, $success, $message, $filename);
             } else { //no file to upload
                 $success = true;
             }
@@ -758,12 +758,21 @@ HTML;
         }
 
         $comment_area = '';
+
         if ($issue->issue_id) {
             $comment_area = <<<HTML
 		<p ><label for="comment">Comment:</label><br/><textarea id="comment" name="comment" cols="45" rows="8" ></textarea></p>	
+                    
+		<p>
+		{$this->__attachment}:<br/>
+		<input type="hidden" name="MAX_FILE_SIZE" value="3000000"> <!-- 3 MB -->
+		<input id="attachment" name="userfile" type="file" />
+		</p>
 HTML;
         }
+
         $issue_options = '';
+
         if ($this->user_has_permission($issue->issue_id)) {
 
             $statuses = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status 
@@ -784,6 +793,7 @@ HTML;
             }
 
             $issue_options = <<<OPTS
+            <hr/>
 <p ><label for="summary">{$this->__summary}:</label><br/><input id="summary" name="summary" type="text" value="{$issue->issue_summary}" size="30" aria-required='true' /></p> 
 <p ><label for="description">{$this->__description}:</label><br/><textarea id="description" name="description" cols="45" rows="8">{$issue->issue_description}</textarea></p>
 <p ><labelfor="type">{$this->__type}:</label><select name="type" id="type" >{$types_options}</select></p>
@@ -800,7 +810,8 @@ OPTS;
 OPTS;
         }
         $action = $this->build_url('do=it_qdo&qdo=save_issue&post_id=' . $post->ID);
-        return <<<HTML
+
+        $ret .= <<<HTML
         <hr />
 	<div id="respond" style="border-top:0;">
 	<h3 id="reply-title">{$form_h3}</h3>
@@ -809,12 +820,19 @@ OPTS;
 		<input type="hidden" name="issue_id" value="{$issue->issue_id}" id="issue_id">
 		{$comment_area}
 		{$issue_options}
-		
+HTML;
+
+        if (!$issue->issue_id) {
+            $ret .= <<<HTML
 		<p>
 		{$this->__attachment}:<br/>
 		<input type="hidden" name="MAX_FILE_SIZE" value="3000000"> <!-- 3 MB -->
 		<input id="attachment" name="userfile" type="file" />
 		</p>
+HTML;
+        }
+
+        $ret .= <<<HTML
 		
 		<p class="form-submit"> 
 			<input name="submit" type="submit" id="submit" value="{$form_submit}" /> 
@@ -822,6 +840,7 @@ OPTS;
 	</form>
 	</div>
 HTML;
+        return $ret;
     }
 
     function build_url($uri_string = '', $post_id = 0) {
@@ -874,7 +893,7 @@ HTML;
             $url = $this->build_url('do=view_issue&issue=' . $issue->issue_id);
             $issue->issue_summary = ($issue->issue_summary);
             $star = !$user->ID ? '' : <<<STAR
-	<td><a title="Click to toggle star" href="javascript:toggle_star({$issue->issue_id})"><img id="star_{$issue->issue_id}" src="{$plugin_url}images/star_{$onoff}.gif" /></a></td>	
+	<td><a href="javascript:toggle_star({$issue->issue_id})"><img id="star_{$issue->issue_id}" src="{$plugin_url}images/star_{$onoff}.gif" /></a></td>	
 STAR;
             $content .= <<<HTML
 		<tr style="background:#{$issue->status_colour};" >
@@ -946,10 +965,10 @@ HTML;
             <h3><?php echo $this->__type; ?></h3>
             <a href="" onclick="return append_new_type();"><?php echo __('Add new', 'issuetracker') ?></a>
             <table class="form-table" id="types_table"> 
-        <?php
-        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_type WHERE type_tracker = 1 ORDER BY type_order ASC, type_id ASC");
-        foreach ($types as $type) {
-            ?>
+                <?php
+                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_type WHERE type_tracker = 1 ORDER BY type_order ASC, type_id ASC");
+                foreach ($types as $type) {
+                    ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
                         <td>
@@ -958,9 +977,9 @@ HTML;
                             <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
                         </td> 
                     </tr>	
-            <?php
-        }
-        ?>
+                    <?php
+                }
+                ?>
             </table>
             <script type="text/javascript" charset="utf-8">
                 function append_new_type() {
@@ -975,10 +994,10 @@ HTML;
             <a href="" onclick="return append_new_status();"><?php echo __('Add new', 'issuetracker') ?></a>
 
             <table class="form-table" id="status_table"> 
-        <?php
-        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status WHERE status_tracker = 1 ORDER BY status_order ASC, status_id ASC");
-        foreach ($types as $status) {
-            ?>
+                <?php
+                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_status WHERE status_tracker = 1 ORDER BY status_order ASC, status_id ASC");
+                foreach ($types as $status) {
+                    ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
                         <td>
@@ -988,9 +1007,9 @@ HTML;
                             <a onclick="jQuery(this).parent().parent().remove(); return false;" href=""><?php echo __('delete', 'issuetracker'); ?></a>
                         </td> 
                     </tr>	
-            <?php
-        }
-        ?>
+                    <?php
+                }
+                ?>
             </table>
 
             <script type="text/javascript" charset="utf-8">
@@ -1006,10 +1025,10 @@ HTML;
             <a href="" onclick="return append_new_category();"><?php echo __('Add new', 'issuetracker') ?></a>
 
             <table class="form-table" id="category_table"> 
-        <?php
-        $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_category WHERE category_tracker = 1 ORDER BY category_order ASC, category_id ASC");
-        foreach ($types as $category) {
-            ?>
+                <?php
+                $types = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}it_category WHERE category_tracker = 1 ORDER BY category_order ASC, category_id ASC");
+                foreach ($types as $category) {
+                    ?>
                     <tr valign="top"> 
                         <td class="dragger"></td>
                         <td>
@@ -1039,9 +1058,9 @@ HTML;
 
         <h3><?php echo __('Import from Google Code Issue Tracker CSV', 'issuetracker') ?></h3><br/>
         <form enctype="multipart/form-data" action="" method="post">
-        <?php wp_nonce_field('import-google-code-csv'); ?>
+            <?php wp_nonce_field('import-google-code-csv'); ?>
             <input type="hidden" name="MAX_FILE_SIZE" value="30000000" />
-        <?php echo __('Select a file containing the CSV export file', 'issuetracker') ?>: <input name="userfile" type="file" />
+            <?php echo __('Select a file containing the CSV export file', 'issuetracker') ?>: <input name="userfile" type="file" />
             <p class="submit">
                 <input type="hidden" name="action" value="import-google-code-csv" />
                 <input type="submit" value="<?php echo __('Import', 'issuetracker') ?>: &raquo;" class="button-primary" />
