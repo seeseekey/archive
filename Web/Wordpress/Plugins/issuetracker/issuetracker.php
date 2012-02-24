@@ -843,6 +843,7 @@ HTML;
         $issues = $this->it_get_issues($tracker_id);
 
         foreach ($issues as $issue) {
+            if($issue->status_strike) continue;
             $strike = $issue->status_strike ? 'strike' : '';
             $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
 												WHERE user_id = %d AND issue_id = %d", $user->ID, $issue->issue_id));
