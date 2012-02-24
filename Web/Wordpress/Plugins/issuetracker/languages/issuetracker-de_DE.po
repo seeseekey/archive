@@ -19,118 +19,143 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: issuetracker.php:56
+#: issuetracker.php:85
 #@ issuetracker
 msgid "Sorry you don't have the privileges to do this!"
 msgstr "Entschuldigung aber du hast keine Rechte dies zu tun!"
 
-#: issuetracker.php:618
+#: issuetracker.php:635
 #@ issuetracker
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
 msgstr "Die hochgeladene Datei überschreitet die upload_max_filesize in der php.ini."
 
-#: issuetracker.php:621
+#: issuetracker.php:638
 #@ issuetracker
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
 msgstr "Die hochgeladene Datei überschreitet die MAX_FILE_SIZE-Direktive, die im HTML-Formular angegeben wurde."
 
-#: issuetracker.php:624
+#: issuetracker.php:641
 #@ issuetracker
 msgid "The uploaded file was only partially uploaded."
 msgstr "Die hochgeladene Datei wurde nur teilweise hochgeladen."
 
-#: issuetracker.php:627
+#: issuetracker.php:644
 #@ issuetracker
 msgid "No file was uploaded."
 msgstr "Es wurde keine Datei hochgeladen."
 
-#: issuetracker.php:630
+#: issuetracker.php:647
 #@ issuetracker
 msgid "Missing a temporary folder."
 msgstr "Ein temporäres Verzeichnis fehlt."
 
-#: issuetracker.php:633
+#: issuetracker.php:650
 #@ issuetracker
 msgid "Can't write to disk."
 msgstr "Kann nicht auf die Festplatte schreiben."
 
-#: issuetracker.php:680
+#: issuetracker.php:687
 #@ issuetracker
 msgid "Change"
 msgstr "Ändere"
 
-#: issuetracker.php:681
+#: issuetracker.php:688
 #@ issuetracker
 msgid "Save changes"
 msgstr "Speichere Änderungen"
 
-#: issuetracker.php:690
+#: issuetracker.php:697
 #@ issuetracker
 msgid "Submit new issue"
 msgstr "Neue Aufgabe anlegen"
 
-#: issuetracker.php:691
+#: issuetracker.php:698
 #@ issuetracker
 msgid "Submit"
 msgstr "Speichern"
 
-#: issuetracker.php:888
+#: issuetracker.php:896
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Sie verfügen nicht über ausreichende Berechtigungen, um diese Seite zu betreten."
 
-#: issuetracker.php:904
+#: issuetracker.php:912
 #@ menu-test
 msgid "Issue Tracker Settings"
 msgstr "Issue Tracker Einstellungen"
 
-#: issuetracker.php:989
+#: issuetracker.php:997
 #@ issuetracker
 msgid "Save Changes"
 msgstr "Speichere Änderungen"
 
-#: issuetracker.php:639
+#: issuetracker.php:656
 #@ default
 msgid "Error: "
 msgstr ""
 
-#: issuetracker.php:640
+#: issuetracker.php:657
 #@ default
 msgid "error"
 msgstr ""
 
-#: issuetracker.php:668
+#: issuetracker.php:57
 #@ issuetracker
-msgid "Summary:"
-msgstr "Zusammenfassung:"
+msgid "comments"
+msgstr "Kommentare"
 
-#: issuetracker.php:669
+#: issuetracker.php:58
 #@ issuetracker
-msgid "Description:"
-msgstr "Beschreibung:"
+msgid "comment"
+msgstr "Kommentiere"
 
-#: issuetracker.php:670
+#: issuetracker.php:47
 #@ issuetracker
-msgid "Type:"
-msgstr "Typ:"
+msgid "ID"
+msgstr "ID"
 
-#: issuetracker.php:671
+#: issuetracker.php:48
 #@ issuetracker
-msgid "Status:"
-msgstr "Status:"
+msgid "Summary"
+msgstr "Zusammenfassung"
 
-#: issuetracker.php:672
+#: issuetracker.php:49
 #@ issuetracker
-msgid "Category:"
-msgstr "Kategorie:"
+msgid "Description"
+msgstr "Beschreibung"
 
-#: issuetracker.php:673
+#: issuetracker.php:50
 #@ issuetracker
-msgid "Assignee:"
-msgstr "Zugewiesen:"
+msgid "Type"
+msgstr "Typ"
 
-#: issuetracker.php:674
+#: issuetracker.php:51
 #@ issuetracker
-msgid "Attachment:"
-msgstr "Anhang:"
+msgid "Status"
+msgstr "Status"
+
+#: issuetracker.php:52
+#@ issuetracker
+msgid "Category"
+msgstr "Kategorie"
+
+#: issuetracker.php:53
+#@ issuetracker
+msgid "Assignee"
+msgstr "Zugewiesen"
+
+#: issuetracker.php:54
+#@ issuetracker
+msgid "Attachment"
+msgstr "Anhang"
+
+#: issuetracker.php:55
+#@ issuetracker
+msgid "Reported on"
+msgstr "Gemeldet am"
+
+#: issuetracker.php:56
+#@ issuetracker
+msgid "Reporter"
+msgstr "Reporter"
 
