@@ -568,12 +568,14 @@ HTML;
                 if ($new->issue_assignee != $issue->issue_assignee) {
                     $id = (int) $new->issue_assignee;
                     $new_assignee_name = '--';
+                    
                     if ($id) {
                         $new_assignee = $wpdb->get_row("SELECT display_name FROM $wpdb->users WHERE ID=$id");
                         $new_assignee_name = $new_assignee->display_name;
                         $wpdb->query("INSERT INTO {$wpdb->prefix}it_starred (user_id, issue_id)
 								VALUES ($id, $issue->issue_id)");
                     }
+                    
                     $changes[] = "<strong>{$this->__assignee}</strong> {$new_assignee_name}";
                 }
 
@@ -784,10 +786,15 @@ HTML;
                 $status_options .= "<option value={$status->status_id}{$sel}>{$status->status_name}</option>";
             }
 
-            $users = $wpdb->get_results("SELECT u.ID, u.display_name FROM $wpdb->users u");
-
+            $users = $wpdb->get_results("SELECT u.ID, u.display_name, m.meta_value FROM $wpdb->users u, $wpdb->usermeta m WHERE u.ID=m.user_id AND m.meta_key LIKE 'wp_user_level' ORDER BY u.display_name");
+            
             $users_options = '<option value=0></option>';
             foreach ($users as $user) {
+                //Check if user contributer or greater
+                $userLevel=$user->meta_value;
+                $userLevelInt = (int)$userLevel;
+                if($userLevelInt<1) continue;
+                
                 $sel = $user->ID == $issue->issue_assignee ? ' selected' : '';
                 $users_options .= "<option value={$user->ID}{$sel}>{$user->display_name}</option>";
             }
