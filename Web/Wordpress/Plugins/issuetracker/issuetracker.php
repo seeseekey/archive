@@ -204,13 +204,16 @@ class issuetracker {
 
     function it_action_handlers() {
         global $wpdb;
+
         $user = wp_get_current_user();
         $do = $this->get_request('do');
         $qdo = $this->get_request('qdo');
-        if ($do && $do == 'it_qdo' && $qdo) {
+        
+        if ($do && $do == 'qdo' && $qdo) {
             if (!$user->ID) {
                 wp_die('You do not have permission to be here. Please login first then try again.');
             }
+            
             switch ($qdo) {
                 case 'toggle_star':
                     $id = $this->get_request('issue_id');
@@ -400,7 +403,7 @@ class issuetracker {
         if (current_user_can('manage_options')) {
             $delete_link = '
 		<div>
-			<label><a href="' . $this->build_url('do=it_qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">' . $this->__delete . '</a></label>
+			<label><a href="' . $this->build_url('do=qdo&qdo=delete_issue&post_id=' . $post->ID . '&issue_id=' . $id) . '">' . $this->__delete . '</a></label>
 		</div>';
         }
 
@@ -473,7 +476,7 @@ HTML;
 
             $comment->comment_body = ($comment->comment_body);
             $comment->comment_time = date($this->dateFormat, $comment->comment_time);
-            $delete_url = $this->build_url('do=it_qdo&qdo=delete_comment&post_id=' . $post->ID . '&comment_id=' . $comment->comment_id);
+            $delete_url = $this->build_url('do=qdo&qdo=delete_comment&post_id=' . $post->ID . '&comment_id=' . $comment->comment_id);
             $delete_link = current_user_can('manage_options') ? " <a class='comment-edit-link' href='$delete_url'>({$this->__delete})</a>" : '';
             $comment->comment_body = nl2br($comment->comment_body);
 
@@ -815,7 +818,7 @@ OPTS;
 <p ><label for="category">{$this->__category}:</label><select name="category" id="category" >{$categories_options}</select></p>
 OPTS;
         }
-        $action = $this->build_url('do=it_qdo&qdo=save_issue&post_id=' . $post->ID);
+        $action = $this->build_url('do=qdo&qdo=save_issue&post_id=' . $post->ID);
 
         $ret .= <<<HTML
         <hr />
