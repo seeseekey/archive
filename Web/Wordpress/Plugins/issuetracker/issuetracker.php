@@ -550,14 +550,14 @@ HTML;
                 $new->issue_assignee = $this->get_request('assignee');
 
                 if ($new->issue_summary != $issue->issue_summary) {
-                    $changes[] = "<strong>Summary</strong> {$new->issue_summary}";
+                    $changes[] = "<strong>{$this->__summary}</strong> {$new->issue_summary}";
                 }
 
                 if ($new->issue_type != $issue->issue_type) {
                     $old_type = $wpdb->get_row("SELECT type_name, type_colour FROM {$wpdb->prefix}it_type WHERE type_id={$issue->issue_type}");
                     $id = (int) $new->issue_type;
                     $new_type = $wpdb->get_row("SELECT type_name, type_colour FROM {$wpdb->prefix}it_type WHERE type_id=$id");
-                    $changes[] = "<strong>Type</strong> <span style='background:#{$old_type->type_colour}'>{$old_type->type_name}</span> > <span style='background:#{$new_type->type_colour}'>{$new_type->type_name}</span>";
+                    $changes[] = "<strong>{$this->__type}</strong> <span style='background:#{$old_type->type_colour}'>{$old_type->type_name}</span> > <span style='background:#{$new_type->type_colour}'>{$new_type->type_name}</span>";
                 }
 
                 if ($new->issue_status != $issue->issue_status) {
@@ -566,11 +566,11 @@ HTML;
                     $id = (int) $new->issue_status;
                     $new_status = $wpdb->get_row("SELECT status_name, status_colour, status_strike FROM {$wpdb->prefix}it_status WHERE status_id=$id");
                     $strike2 = $new_status->status_strike ? 'strike' : '';
-                    $changes[] = "<strong>Status</strong> <span style='background:#{$old_status->status_colour}' class='$strike1'>{$old_status->status_name}</span> > <span style='background:#{$new_status->status_colour}' class='$strike2'>{$new_status->status_name}</span>";
+                    $changes[] = "<strong>{$this->__status}</strong> <span style='background:#{$old_status->status_colour}' class='$strike1'>{$old_status->status_name}</span> > <span style='background:#{$new_status->status_colour}' class='$strike2'>{$new_status->status_name}</span>";
                 }
 
                 if ($new->issue_description != $issue->issue_description) {
-                    $changes[] = "<strong>Description</strong> {$new->issue_description}";
+                    $changes[] = "<strong>{$this->__description}</strong> {$new->issue_description}";
                 }
 
                 if ($new->issue_assignee != $issue->issue_assignee) {
@@ -691,7 +691,7 @@ HTML;
 
 //check file spoofing
                 if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-                    $message = 'Stop trying to spoof the $_FILES array hacker!';
+                    $message = __('Stop trying to spoof the $_FILES array hacker!', 'issuetracker');
                 } else {
                     $filename = basename($_FILES['userfile']['name']);
 
