@@ -597,7 +597,7 @@ HTML;
             $comment = $changes_stuff . '<p>' . $this->get_request('comment') . '</p>';
 
 //, and make the comment
-            if (strlen($comment) > 7) {
+            if (strlen($comment) > 7 || $_FILES['userfile']["name"]) {
 // first make sure this plugin has not been submitted recently
                 $minutes = 10;
                 $already_made = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_comment
