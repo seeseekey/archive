@@ -945,8 +945,14 @@ HTML;
 										WHERE s.issue_id = %d AND s.user_id <> %d", $issue_id, $poster->ID));
         $headers = "MIME-Version: 1.0\n" .
                 "Content-Type: text/html; charset=\"" . get_option('blog_charset') . "\"\n";
+        
         foreach ($users as $user) {
-            wp_mail($user->user_email, '[WP-IT] Changes to issue #' . $issue_id, '<p>New comment by ' . $poster->display_name . '</p>' . $comment . '<p>Click here to go to the issue: ' . $this->build_url('do=view_issue&issue=' . $issue_id, (int) $this->get_request('post_id')) . '</p><p>-- Powered by Issue Tracker</p>', $headers);
+            wp_mail($user->user_email, 
+                    '[IssueTracker] ' . __('Changes to issue', 'issuetracker') . ' #' . $issue_id,
+                    '<p>' . __('New comment by', 'issuetracker') . ' ' . $poster->display_name . '</p>' . $comment . 
+                    '<p>' . __('Click here to go to the issue', 'issuetracker') . ': ' 
+                    . $this->build_url('do=view_issue&issue=' . $issue_id, (int) $this->get_request('post_id')) 
+                    . '</p>', $headers);
         }
     }
 
