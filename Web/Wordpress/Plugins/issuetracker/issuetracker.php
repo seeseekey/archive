@@ -289,7 +289,6 @@ class issuetracker {
     }
 
     function it_styles() {
-// global $post;
         echo '
 	<link type="text/css" rel="stylesheet" href="' . site_url() . '/wp-content/plugins/issuetracker/style.css">
 	<script type="text/javascript" src="' . site_url() . '/wp-content/plugins/issuetracker/javascript/javascripts.js"></script>
@@ -306,6 +305,12 @@ class issuetracker {
 // super admin!
             return true;
         }
+        
+        if (current_user_can('contributor')) {
+// contributor
+            return true;
+        }
+        
 // has to be the assignee to change
         $issue = $this->it_get_issue($issue_id);
         $user = wp_get_current_user();
