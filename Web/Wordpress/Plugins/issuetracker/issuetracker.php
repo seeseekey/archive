@@ -306,10 +306,9 @@ class issuetracker {
             return true;
         }
         
-        if (current_user_can('contributor')) {
-// contributor
-            return true;
-        }
+        if (current_user_can('administrator')) { return true; } // administrator       
+        if (current_user_can('editor')) { return true; } // editor
+        if (current_user_can('contributor')) { return true; } // contributor
         
 // has to be the assignee to change
         $issue = $this->it_get_issue($issue_id);
@@ -691,7 +690,7 @@ HTML;
 
 //check file spoofing
                 if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-                    $message = __('Stop trying to spoof the $_FILES array hacker!', 'issuetracker');
+                    $message = __('Stop trying to spoof the $_FILES array hacker!', 'issuetracker'); 
                 } else {
                     $filename = basename($_FILES['userfile']['name']);
 
