@@ -308,6 +308,7 @@ class issuetracker {
         
         if (current_user_can('administrator')) { return true; } // administrator       
         if (current_user_can('editor')) { return true; } // editor
+        if (current_user_can('author')) { return true; } // author
         if (current_user_can('contributor')) { return true; } // contributor
         
 // has to be the assignee to change
