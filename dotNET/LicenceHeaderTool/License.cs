@@ -26,6 +26,7 @@ namespace LicenceHeaderTool
 	public enum License
 	{
 		None,
-		GPLv3
+		GPLv3,
+		InvertikaGPLv3
 	}
 }

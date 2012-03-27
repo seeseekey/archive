@@ -29,13 +29,13 @@ namespace LicenceHeaderTool
 	{
 		static void DisplayHelp()
 		{
-			Console.WriteLine("Licence Header Tool v1.00");
+			Console.WriteLine("Licence Header Tool v1.05");
 			Console.WriteLine("(c) 2012 by the seeseekey (http://seeseekey.net)");
 			Console.WriteLine("");
 			Console.WriteLine("Nutzung: LicenceHeaderTool -action -parameters");
-			Console.WriteLine("  z.B. LicenceHeaderTool -setGPLv3 /test seeseekey seeseekey@example.org \"2011, 2012\"");
+			Console.WriteLine("  z.B. LicenceHeaderTool -GPLv3 /test seeseekey seeseekey@example.org \"2011, 2012\"");
 			Console.WriteLine("");
-			Console.WriteLine("  -setGPLv3 <-overwrite> <projectPath> <author> <mail> <year>");
+			Console.WriteLine("  -GPLv3 <-overwrite> <projectPath> <author> <mail> <year>");
 		}
 
 		static List<string> GetFilesFromParameters(Parameters param)
@@ -54,6 +54,39 @@ namespace LicenceHeaderTool
 		}
 
 		#region Licences
+		public static List<string> GetInvertikaLicenceHeaderGPLv3(string filename)
+		{
+			List<string> ret=new List<string>();
+
+			ret.Add("");
+			ret.Add(String.Format("  {0}", FileSystem.GetFilename(filename)));
+			ret.Add("");
+			ret.Add("  This file is part of Invertika (http://invertika.org)");
+			ret.Add(" ");
+			ret.Add("  Based on The Mana Server (http://manasource.org)");
+			ret.Add("  Copyright (C) 2004-2012  The Mana World Development Team ");
+			ret.Add("");
+			ret.Add("  Author:");
+			ret.Add("       seeseekey <seeseekey@googlemail.com>");
+			ret.Add(" ");
+			ret.Add("  Copyright (c) 2011, 2012 by Invertika Development Team");
+			ret.Add(" ");
+			ret.Add("  This program is free software: you can redistribute it and/or modify");
+			ret.Add("  it under the terms of the GNU General Public License as published by");
+			ret.Add("  the Free Software Foundation, either version 3 of the License, or");
+			ret.Add("  (at your option) any later version.");
+			ret.Add(" ");
+			ret.Add("  This program is distributed in the hope that it will be useful,");
+			ret.Add("  but WITHOUT ANY WARRANTY; without even the implied warranty of");
+			ret.Add("  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the");
+			ret.Add("  GNU General Public License for more details.");
+			ret.Add(" ");
+			ret.Add("  You should have received a copy of the GNU General Public License");
+			ret.Add("  along with this program.  If not, see <http://www.gnu.org/licenses/>.");
+
+			return ret;
+		}
+
 		public static List<string> GetGPLv3(string filename, string author, string mail, string year)
 		{
 			List<string> ret=new List<string>();
@@ -83,7 +116,7 @@ namespace LicenceHeaderTool
 		#region Functions
 		static void ProcessCSharpFile(string filename, bool overwrite, string author, string mail, string year, License license)
 		{
-			if(FileSystem.GetFilename(filename.ToLower())=="assemblyinfo.cs" ||
+			if(FileSystem.GetFilename(filename.ToLower())=="assemblyinfo.cs"||
 			   FileSystem.GetFilename(filename.ToLower()).IndexOf(".designer.")!=-1)
 			{
 				Console.WriteLine("Skip file {0}", FileSystem.GetFilename(filename));
@@ -97,13 +130,13 @@ namespace LicenceHeaderTool
 
 			foreach(string line in lines)
 			{
-				if(line!=""&&!line.StartsWith("using"))
+				if(line!=""&&!line.StartsWith("using")&&!line.StartsWith("namespace"))
 				{
 					hasLicenseHeader=true;
 					break;
 				}
 
-				if(line.StartsWith("using"))
+				if(line.StartsWith("using")||line.StartsWith("namespace"))
 				{
 					break;
 				}
@@ -116,7 +149,7 @@ namespace LicenceHeaderTool
 				{
 					usingLine++;
 
-					if(line.StartsWith("using"))
+					if(line.StartsWith("using")||line.StartsWith("namespace"))
 					{
 						break;
 					}
@@ -135,6 +168,11 @@ namespace LicenceHeaderTool
 					case License.GPLv3:
 						{
 							licenceText=GetGPLv3(filename, author, mail, year);
+							break;
+						}
+					case License.InvertikaGPLv3:
+						{
+							licenceText=GetInvertikaLicenceHeaderGPLv3(FileSystem.GetFilename(filename));
 							break;
 						}
 					default:
@@ -207,24 +245,27 @@ namespace LicenceHeaderTool
 			}
 
 			//Aktion starten
-			if(parameters.GetBool("setGPLv3"))
+
+			List<string> files=GetFilesFromParameters(parameters);
+
+			if(files.Count<4)
 			{
-				List<string> files=GetFilesFromParameters(parameters);
-
-				if(files.Count<4) Console.WriteLine("Need more parameters!");
-				else
-				{
-					string projectPath=files[0];
-					string author=files[1];
-					string mail=files[2];
-					string year=files[3];
-
-					ProcessFiles(projectPath, parameters.GetBool("overwrite"), author, mail, year, License.GPLv3);
-				}
+				Console.WriteLine("Need more parameters!");
+				DisplayHelp();
 			}
 			else
 			{
-				DisplayHelp();
+				string projectPath=files[0];
+				string author=files[1];
+				string mail=files[2];
+				string year=files[3];
+
+				License license=License.GPLv3;
+
+				if(parameters.GetBool("GPLv3")) license=License.GPLv3;
+				else if(parameters.GetBool("InvertikaGPLv3")) license=License.InvertikaGPLv3;
+
+				ProcessFiles(projectPath, parameters.GetBool("overwrite"), author, mail, year, license);
 			}
 		}
 	}
