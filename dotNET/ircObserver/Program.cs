@@ -36,17 +36,26 @@ namespace ircObserver
 
 		static void OnChannelMessage(object sender, IrcEventArgs e)
 		{
-			string cbMessage="";
-
-			foreach(string i in e.Data.MessageArray)
+			try
 			{
-				cbMessage+=i+" ";
-			}
+				string cbMessage="";
 
-			cbMessage=cbMessage.TrimEnd(' ');
-			string msg=String.Format("[{0:D2}:{1:D2}] {2}: {3}", DateTime.Now.Hour, DateTime.Now.Minute, e.Data.Nick, cbMessage);
-			Conversion.Add(msg);
-			Console.WriteLine(msg);
+				foreach(string i in e.Data.MessageArray)
+				{
+					cbMessage+=i+" ";
+				}
+
+				cbMessage=cbMessage.TrimEnd(' ');
+				string msg=String.Format("[{0:D2}:{1:D2}] {2}: {3}", DateTime.Now.Hour, DateTime.Now.Minute, e.Data.Nick, cbMessage);
+				Conversion.Add(msg);
+				Console.WriteLine(msg);
+			}
+			catch(Exception ex)
+			{
+				string msg=String.Format("[{0:D2}:{1:D2}] {2}: {3}", DateTime.Now.Hour, DateTime.Now.Minute, e.Data.Nick, ex.Message.ToString());
+				Conversion.Add(msg);
+				Console.WriteLine(msg);
+			}
 		}
 
 		static void timer_Tick(object sender, ElapsedEventArgs e)
@@ -132,24 +141,40 @@ namespace ircObserver
 			irc.ActiveChannelSyncing=true;
 			irc.OnChannelMessage+=new IrcEventHandler(OnChannelMessage);
 
+			irc.AutoRejoin=true;
+			irc.AutoRejoinOnKick=true;
+			irc.AutoRelogin=true;
+			irc.AutoRetry=true;
+
 			string[] serverlist;
 			serverlist=new string[] { server };
 			int port=6667;
 
-			try
+			while(true)
 			{
-				irc.Connect(serverlist, port);
-				irc.Login(username, realname, 0, ident);
-				irc.RfcJoin(channel);
+				try
+				{
+					irc.Connect(serverlist, port);
+					irc.Login(username, realname, 0, ident);
+					irc.RfcJoin(channel);
 
-				Console.WriteLine("Connected to "+server+" -> "+channel);
+					Console.WriteLine("Connected to "+server+" -> "+channel);
 
-				irc.Listen();
-				irc.Disconnect();
-			}
-			catch(ConnectionException e)
-			{
-				Console.WriteLine("couldn't connect! Reason: "+e.Message);
+					irc.Listen();
+					irc.Disconnect();
+				}
+				catch(ConnectionException ex)
+				{
+					string msg="Couldn't connect! Reason: "+ex.Message;
+					Conversion.Add(msg);
+					Console.WriteLine(msg);
+				}
+				catch(Exception ex)
+				{
+					string msg="Another exception: "+ex.Message;
+					Conversion.Add(msg);
+					Console.WriteLine(msg);
+				}
 			}
 		}
 	}
