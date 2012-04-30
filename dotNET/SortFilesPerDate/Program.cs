@@ -11,8 +11,9 @@ namespace SortFilesPerDate
 		static void Main(string[] args)
 		{
 			#region Upload Sorting
-			string pathInput=args[0];
-			string pathOutput=args[1];
+			bool move=args[0]=="move";
+			string pathInput=args[1];
+			string pathOutput=args[2];
 
 			FileSystem.CreateDirectory(pathOutput);
 
@@ -25,12 +26,19 @@ namespace SortFilesPerDate
 				string year=dt.Year.ToString();
 				string month=dt.Month.ToString("00");
 
-				string copyPath=String.Format("{0}{1}\\{2}\\", pathOutput, year, month);
-				FileSystem.CreateDirectory(copyPath, true);
+				string targetPath=String.Format("{0}{3}{1}{3}{2}{3}", pathOutput, year, month, FileSystem.PathDelimiter);
+				FileSystem.CreateDirectory(targetPath, true);
 
-				string copyFile=copyPath+FileSystem.GetFilename(file);
-
-				FileSystem.CopyFile(file, copyFile);
+				string targetFile=targetPath+FileSystem.GetFilename(file);
+				
+				if(move)
+				{
+					FileSystem.MoveFile(file, targetFile);
+				}
+				else
+				{
+					FileSystem.CopyFile(file, targetFile);
+				}
 			}
 			#endregion
 		}
