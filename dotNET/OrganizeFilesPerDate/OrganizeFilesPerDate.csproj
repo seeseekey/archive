@@ -21,7 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <Commandlineparameters>copy /home/seeseekey/Test/ /home/seeseekey/TransferNeu</Commandlineparameters>
+    <Commandlineparameters>copy /home/seeseekey/TestInput/ /home/seeseekey/TestOutput/</Commandlineparameters>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
   </PropertyGroup>
