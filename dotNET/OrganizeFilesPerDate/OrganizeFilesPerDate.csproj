@@ -20,7 +20,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
-    <Commandlineparameters>copy /home/seeseekey/TestInput/ /home/seeseekey/TestOutput/</Commandlineparameters>
+    <Commandlineparameters>move sort "/Users/seeseekey/Transfer/Fotos" "/Users/seeseekey/Transfer/Fotos (sortiert)"</Commandlineparameters>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
   </PropertyGroup>

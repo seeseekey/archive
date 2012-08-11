@@ -14,9 +14,9 @@ namespace OrganizeFilesPerDate
 			
             #region Upload Sorting
             bool move = args [0] == "move";
-            bool sort = args [0] == "sort";
-            string pathInput = args [1];
-            string pathOutput = args [2];
+            bool sort = args [1] == "sort";
+            string pathInput = args [2].Trim(new char[] {'"'});
+            string pathOutput = args [3].Trim(new char[] {'"'});
 
             FileSystem.CreateDirectory(pathOutput);
 
