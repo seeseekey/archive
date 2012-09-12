@@ -67,7 +67,7 @@ namespace LicenceHeaderTool
 			ret.Add("  Copyright (C) 2004-2012  The Mana World Development Team ");
 			ret.Add("");
 			ret.Add("  Author:");
-			ret.Add("       seeseekey <seeseekey@googlemail.com>");
+			ret.Add("       seeseekey <seeseekey@gmail.com>");
 			ret.Add(" ");
 			ret.Add("  Copyright (c) 2011, 2012 by Invertika Development Team");
 			ret.Add(" ");
