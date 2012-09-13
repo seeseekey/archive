@@ -110,7 +110,16 @@ namespace update
 				{
 					try
 					{
-						file2Hash.Add(file, Hash.SHA1.HashFile(file));
+						if(file2Hash.ContainsKey(file))
+						{
+							//Bestehenden Key/Value modifizieren
+							file2Hash[file]=Hash.SHA1.HashFile(file);
+						}
+						else
+						{
+							//Neuen Key anlegen
+							file2Hash.Add(file, Hash.SHA1.HashFile(file));
+						}
 
 						Console.WriteLine("({0}/{1}) - Lade Datei {2} hoch...", fileCounter+1, filesToUpload.Count, FileSystem.GetFilename(file));
 						string uploadf=FileSystem.GetRelativePath(file, sourceFolder);
@@ -132,12 +141,12 @@ namespace update
 
 						Client.PutFile(file, uploadf);
 					}
-					catch
+					catch (Exception ex)
 					{
 						Console.WriteLine("({0}/{1}) - Fehler beim Upload von Datei {2}.", fileCounter+1, filesToUpload.Count, FileSystem.GetFilename(file));
-						Thread.Sleep(2000);
-						Console.WriteLine("Stelle Verbindung wieder her...", FileSystem.GetFilename(file));
-						Client.Connect(networkCredential.Domain, networkCredential, ESSLSupportMode.ClearText);
+						Console.WriteLine("({0}/{1}) - Meldung {2}.", fileCounter+1, filesToUpload.Count, ex.ToString());
+						Client.Close();
+						return;
 					}
 				}
 				else
