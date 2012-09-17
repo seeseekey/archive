@@ -88,6 +88,8 @@ namespace update
 
 			//Dateien hochladen
 			int saveCounter=0;
+			int ftpRefreshCounter=0;
+
 			for(int fileCounter=0; fileCounter<filesToUpload.Count; fileCounter++)
 			{
 				string file=filesToUpload[fileCounter];
@@ -159,6 +161,16 @@ namespace update
 				{
 					saveCounter=0;
 					SaveHashFile(filenameHashTable, file2Hash);
+
+					Client.KeepAlive();
+				}
+
+				//KeepAlive Pakete senden
+				ftpRefreshCounter++;
+				if(ftpRefreshCounter>10000)
+				{
+					ftpRefreshCounter=0;
+					Client.KeepAlive();
 				}
 			}
 
