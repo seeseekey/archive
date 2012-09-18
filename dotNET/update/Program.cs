@@ -141,6 +141,7 @@ namespace update
 							}
 						}
 
+						saveCounter++;
 						Client.PutFile(file, uploadf);
 					}
 					catch (Exception ex)
@@ -155,14 +156,11 @@ namespace update
 				{
 					Console.WriteLine("({0}/{1}) - Überspringe Datei {2}...", fileCounter+1, filesToUpload.Count, FileSystem.GetFilename(file));
 				}
-
-				saveCounter++;
+				
 				if(saveCounter>100)
 				{
 					saveCounter=0;
 					SaveHashFile(filenameHashTable, file2Hash);
-
-					Client.KeepAlive();
 				}
 
 				//KeepAlive Pakete senden
