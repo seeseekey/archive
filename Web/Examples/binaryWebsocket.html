@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Websocket Binary Test</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      websocket = new WebSocket("ws://echo.websocket.org");
+      websocket.binaryType = "arraybuffer"; //Binärtyp auf arraybuffer setzen
+
+      //OnOpen verdraten
+      websocket.onopen = function (e) {
+        //Array zusammenbauen
+        var message = new ArrayBuffer(9);
+        var dataViewMessage = new DataView(message);
+
+        dataViewMessage.setInt8(0, 25); //Command ID
+        dataViewMessage.setInt16(1, 11); //Account ID
+        dataViewMessage.setInt32(5, 43333020); //Anzahl der Credits
+
+        //message per Websocket wegschicken
+        websocket.send(message);
+      }
+
+      //OnMessage verdraten
+      websocket.onmessage = function (wsPackage) {
+        //Datentyp ermitteln
+        if(wsPackage.data instanceof ArrayBuffer) alert("ArrayBuffer");
+        else if(wsPackage.data instanceof Blob) alert("Blob");
+        else if(typeof wsPackage.data === "string") alert("string");
+
+        //Daten empfangen und auseinander bauen
+        var dataViewPackage = new DataView(wsPackage.data);
+        alert(dataViewPackage.getInt8(0));
+        alert(dataViewPackage.getInt16(1));
+        alert(dataViewPackage.getInt32(5));
+      }
+    </script>
+  </body>
+</html>
