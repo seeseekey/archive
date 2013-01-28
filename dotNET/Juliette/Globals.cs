@@ -144,7 +144,7 @@ namespace Juliette
 
 			InstDataTable.Rows[0]["ElementName"]=newName;
 
-			InstSQLite.UpdateData(InstDataTable, "IndexID", "gtjlteCategoryTree");
+			InstSQLite.UpdateData(InstDataTable, "IndexID");
 		}
 
 		public static bool RemoveCategory(int id)
@@ -161,7 +161,7 @@ namespace Juliette
 
 			InstDataTable.Rows[0]["DmtLabel"]=newName;
 
-			InstSQLite.UpdateData(InstDataTable, "IndexID", "gtjlteMain");
+			InstSQLite.UpdateData(InstDataTable, "IndexID");
 		}
 
 		/// <summary>
@@ -193,7 +193,7 @@ namespace Juliette
 
 			InstDataTable.Rows[0]["DmtCategory"]=catID;
 
-			InstSQLite.UpdateData(InstDataTable, "IndexID", "gtjlteMain");
+			InstSQLite.UpdateData(InstDataTable, "IndexID");
 		}
 
 		public static DataTable SetCategoryParent(int catID, int parentID)
@@ -203,7 +203,7 @@ namespace Juliette
 
 			InstDataTable.Rows[0]["ParentID"]=parentID;
 
-			InstSQLite.UpdateData(InstDataTable, "IndexID", "gtjlteCategoryTree");
+			InstSQLite.UpdateData(InstDataTable, "IndexID");
 
 			return InstDataTable;
 		}

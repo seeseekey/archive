@@ -287,7 +287,7 @@ namespace Juliette
 						dt.Rows[0]["DmtDescription"]=rtbDescription.Text;
 						dt.Rows[0]["DmtDate"]=dtpDate.Value.Ticks;
 						dt.Rows[0]["DmtSiteCount"]=lbImageData.Items.Count;
-						Globals.InstSQLite.UpdateData(dt, "IndexID", "gtjlteMain");
+						Globals.InstSQLite.UpdateData(dt, "IndexID");
 
 						if(DocumentImagesAreEdited)
 						{
