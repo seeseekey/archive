@@ -106,18 +106,6 @@ namespace Juliette
 				InstSQLiteNewDB.CreateTable(InstDataTable);
 				#endregion
 				#endregion
-
-				#region Tabellen mit Defaults füllen
-				#region xReflection
-				Assembly MainAssembly=Assembly.GetExecutingAssembly();
-				string ver=MainAssembly.GetName().Version.ToString();
-
-				InstDataTable=SpecialTables.GetXReflection("Juliette Database Format (jdf)", "1.00", "1.00", "Juliette v"+ver);
-
-				InstSQLiteNewDB.CreateTable(InstDataTable);
-				InstSQLiteNewDB.InsertData(InstDataTable);
-				#endregion
-				#endregion
 			}
 		}
 
@@ -138,11 +126,11 @@ namespace Juliette
 
 				Globals.InstSQLite=new SQLite(openFileDialog.FileName);
 
-				if(Globals.InstSQLite.CheckXReflection("Juliette Database Format (jdf)"))
+				try
 				{
 					BuildTreeview();
 				}
-				else
+				catch
 				{
 					MessageBox.Show("Bei der ausgewählten Datei handelt es sich um keine gültige Juliette Datei.", "Hinweis");
 				}
@@ -928,7 +916,7 @@ namespace Juliette
 							DataTable dt=Globals.InstSQLite.ExecuteQuery(sqlCommand);
 
 							string cTable=dt.Rows[0]["DmtTable"].ToString();
-							Globals.InstSQLite.RemoveEntry("gtjlteMain", "IndexID", ctnData.ID.ToString());
+							Globals.InstSQLite.RemoveData("gtjlteMain", "IndexID", ctnData.ID.ToString());
 							Globals.InstSQLite.RemoveTable(cTable);
 
 							RefreshDocumentChilds(tnNode.Parent);
