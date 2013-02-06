@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xml>
+  <About>
+    <Version>3</Version> <!-- Knowledge version -->
+  </About>
+
+  <IRC>
+    <UserName>Arbiter</UserName>
+    <RealName>Arbiter</RealName>
+    <Ident>Miranda</Ident>
+    <Server>irc.freenode.net</Server>
+    <Channel>#invertika</Channel>
+	<Password>geheim</Password>
+  </IRC>
+  
+  <SMTP>
+    <Server>smtp.example.com</Server>
+	<Username>test</Username>
+	<Password>geheim</Password>
+    <SenderMail>webmaster@example.com</SenderMail>
+    <RecieverMail>test@example.com</RecieverMail>
+  </SMTP>
+  
+  <!-- Guess the Animal -->
+  <GuessAnimal>
+	<Question question="Lebt es an Land?">
+	  <Yes>Ist es ein Löwe?</Yes>
+	  <No>Ist es ein Blauwal?</No>
+	</Question>
+  </GuessAnimal>
+  
+  <!-- Joke -->
+  <Jokes>
+    <Joke category="Antiwitz">Sitzen zwei Kühe in einer Dachrinne und stricken einen Ofen. Kommt ein Schluck Kaffee vorbei und fragt: Sagt mal dürft ihr überhaupt schon rauchen? Anwortet eine der Kühe: Wieso? Ist hier etwa Einbahnstraße?</Joke>
+	<Joke category="Chuck Norris Facts">Chuck Norris hat bis Unendlich gezählt. Zwei Mal.</Joke>
+	<Joke category="Chuck Norris Facts">Chuck Norris bekommt bei Praktiker 20 % auf alles. Auch auf Tiernahrung.</Joke>
+	<Joke category="Chuck Norris Facts">Wenn Chuck Norris seine Steuererklärung abgibt, schickt er nur weiße Blätter und ein Bild von sich. Chuck Norris musste noch nie Steuern zahlen.</Joke>
+    <Joke>Treffen sich zwei Jäger. Beide tot.</Joke>
+    <Joke>Herr Doktor, Herr Doktor. Wenn ich hier drücke tut es weh, wenn ich hier drücke tut es weh und wenn ich hier drücke tut es auch weh. Ganz klar ihr Finger ist gebrochen.</Joke>
+	<Joke>Was ist grün, hat 7 Arme und ist schleimig? Keine Ahnung aber das gibt es jeden Dienstag in der Cafeteria.</Joke>
+	<Joke>Zwei Jäger sind im Wald unterwegs, als einer von ihnen zusammenbricht. Er scheint nicht mehr zu atmen, und seine Augen sind glasig. Der andere Typ zückt sein Telefon, ruft den Notdienst an und stößt hervor: ‚Mein Freund ist tot! Was kann ich nur machen?‘ - Darauf der Telefonist: ‚Beruhigen Sie sich. Ich kann Ihnen helfen. Zuerst sollten wir sicherstellen, dass er tot ist.‘ Kurze Pause, dann ein Schuss. Zurück am Telefon sagt er: ‚OK, was jetzt?‘</Joke>
+  </Jokes>
+  
+  <!-- Quiz -->
+  <Quiz> 
+  	<!-- Englisch -->
+    <Question category="Englisch" question="Was bedeutet das Wort -approach- auf Deutsch?" points="1">
+      <Keyword>Annäherung</Keyword>
+	  <Keyword>Anfahrt</Keyword>
+	  <Keyword>Anflug</Keyword>
+	  <Keyword>Vorgehen</Keyword>
+      <Keyword>Zugang</Keyword>
+    </Question>
+	
+    <Question category="Englisch" question="Was bedeutet das Wort -overt- auf Deutsch?" points="1">
+      <Keyword>offen</Keyword>
+      <Keyword>offenkundig</Keyword>
+    </Question>
+	
+    <Question category="Englisch" question="Was bedeutet das Wort -translate- auf Deutsch?" points="1">
+      <Keyword>übersetze</Keyword>
+    </Question>
+	
+	<!-- Musik -->
+	<Question category="Musik" question="Wie lautet der bürgerliche Name von Lady Gaga?" points="1" keywordWeight="2">
+      <Keyword>Stefani</Keyword>
+      <Keyword>Joanne</Keyword>
+	  <Keyword>Angelina</Keyword>
+	  <Keyword>Germanotta</Keyword>
+    </Question>
+	
+	<!-- Informatik -->
+	<Question category="Informatik" question="Nenne drei Betriebssysteme von Microsoft." points="1" keywordWeight="3">
+      <Keyword>Singularity</Keyword>
+      <Keyword>XP</Keyword>
+	  <Keyword>Vista</Keyword>
+	  <Keyword>95</Keyword>
+	  <Keyword>98</Keyword>
+	  <Keyword>ME</Keyword>
+	  <Keyword>DOS</Keyword>
+	  <Keyword>3.11</Keyword>
+    </Question>
+	
+	<Question category="Informatik" question="Nenne drei Linuxdistributionen." points="1" keywordWeight="3">
+      <Keyword>Arch</Keyword>
+      <Keyword>Ubuntu</Keyword>
+	  <Keyword>Kubuntu</Keyword>
+	  <Keyword>Suse</Keyword>
+	  <Keyword>Red Hat</Keyword>
+	  <Keyword>Fedora</Keyword>
+	  <Keyword>Debian</Keyword>
+	  <Keyword>Slackware</Keyword>
+    </Question>
+	
+	<Question category="Informatik" question="Nenne drei Prozessorarchitekturen." points="2" keywordWeight="3">
+      <Keyword>MIPS</Keyword>
+      <Keyword>ARM</Keyword>
+	  <Keyword>68000</Keyword>
+	  <Keyword>AVR32</Keyword>
+	  <Keyword>SPARC</Keyword>
+	  <Keyword>x86</Keyword>
+	  <Keyword>TriCore</Keyword>
+	  <Keyword>AMD64</Keyword>
+    </Question>
+	
+	<Question category="Informatik" question="Nenne die Bezeichnung einer 1-Bit CPU." points="7" keywordWeight="1">
+      <Hint>Es ist eine CPU von Motorola.</Hint>
+	  <Hint>Der Name der CPU fängt mit MC an.</Hint>
+      <Keyword>MC14500</Keyword>
+    </Question>
+
+	<Question category="Informatik" question="Nenne die Bezeichnung einer 4-Bit CPU." points="4" keywordWeight="1">
+      <Hint>Das gibt es unter anderem etwas von Intel.</Hint>
+	  <Hint>Texas Instruments stellt so etwas auch her.</Hint>
+      <Keyword>4004</Keyword>
+	  <Keyword>uPD75X</Keyword>
+	  <Keyword>TMS1000</Keyword>
+    </Question>
+	
+	<!-- Invertika -->
+    <Question category="Invertika" question="Wie heißt die Göttin des Lichtes?" points="1">
+        <Keyword>Invertika</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Seit wann ist Invertika in Entwicklung?" points="2">
+        <Keyword>2008</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Seit wann ist der Serverrewrite (C#/Web) in Entwicklung?" points="2">
+        <Keyword>2012</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="In welcher Programiersprache ist manaserv geschrieben?" points="1">
+        <Keyword>C++</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Auf welcher Webseite ist das Manasource Projekt zu finden?" points="1">
+        <Keyword>manasource.org</Keyword>
+    </Question>
+	
+	<Question category="Invertika" question="Nach wem ist die RDA benannt?" points="2" keywordWeight="2">
+        <Keyword>Richard</Keyword>
+		<Keyword>Dean</Keyword>
+		<Keyword>Anderson</Keyword>
+    </Question>
+	
+	<Question category="Invertika" question="Nenne drei Spiele welche irgendwie auf Manatechnlogie aufsetzen?" points="2" keywordWeight="3">
+        <Keyword>Source of Tales</Keyword>
+		<Keyword>Invertika</Keyword>
+		<Keyword>GermanTMW</Keyword>
+		<Keyword>The Mana World</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Zu welchem Genre gehört Invertika?" points="1" keywordWeight="2">
+		<Hint>Es hat etwas mit Entwicklern zu tun.</Hint>
+        <Keyword>Developer</Keyword>
+		<Keyword>Fiction</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Wann kommt der neue Server zum Einsatz?" points="1">
+		<Hint>Einen Tag vor Übermorgen.</Hint>
+        <Keyword>morgen</Keyword>
+    </Question>
+	
+    <Question category="Invertika" question="Nenne vier Invertika Entwickler (aktiv/ehemalige)" points="2" keywordWeight="4">
+        <Keyword>jurkan</Keyword>
+		<Keyword>ablu</Keyword>
+		<Keyword>seeseekey</Keyword>
+		<Keyword>postremus</Keyword>
+		<Keyword>delegan</Keyword>
+		<Keyword>subnet_zero</Keyword>
+		<Keyword>robert</Keyword>
+		<Keyword>cmur2</Keyword>
+    </Question>
+	
+  	<!-- Mathematik -->
+    <Question category="Mathematik" question="4*4" points="1">
+      <Keyword>16</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="3*4" points="1">
+      <Keyword>12</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="47/5*4+0,40" points="2">
+      <Keyword>38</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="Das Produkt von 14 und 17?" points="1">
+      <Keyword>238</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="Die letzen vier Ziffern von Pi?" points="6">
+	  <Hint>Pi ist eine irrationale und transzendente Zahl.</Hint>
+      <Keyword>nicht berechenbar</Keyword>
+	  <Keyword>keine</Keyword>
+	  <Keyword>unbekannt</Keyword>
+	  <Keyword>nicht ermittelbar</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="Ergebnis bei einer Division durch Null?" points="3">
+      <Keyword>unendlich</Keyword>
+    </Question>
+	
+    <Question category="Mathematik" question="Die Unvollständigkeitssätze sind von?" points="3">
+      <Keyword>Kurt Gödel</Keyword>
+	  <Keyword>Gödel</Keyword>
+    </Question>
+	
+	<!-- Minecraft -->
+	<Question category="Minecraft" question="Wenn trifft man nur im Ende?" points="2">
+	  <Hint>Ihn gibt es nur einmal.</Hint>
+	  <Keyword>Enderdrache</Keyword>
+	</Question>
+	
+	<Question category="Minecraft" question="Wie viele Einheiten eines Stoffes wird für eine Komplette Rüstung gebraucht?" points="1">
+	  <Hint>Der Rüstungstyp ist egal.</Hint>
+	  <Keyword>24</Keyword>
+	</Question>
+	
+	<!-- Star Trek -->
+	<Question category="Star Trek" question="Aus wie vielen Staffeln besteht die Star Trek: Enterprise Serie" points="1">
+	  <Hint>Nicht die Anzahl der DVD Boxen.</Hint>
+	  <Hint>Es ist die Serie aus dem 21. Jahrhundert gemeint.</Hint>
+	  <Success>Richtig, es gibt 4 Staffeln.</Success>
+	  <Keyword>4</Keyword>
+	</Question>
+	
+    <Question category="Star Trek" question="Wie heißt der Captian der Enterprise NCC-1701?" points="1" keywordWeight="2">
+		<Hint>Ohne verdammtes A, B und C!</Hint>
+		<Success>Ja, James Tiberius Kirk war der Captian der Enterprise bevor er von Dr. Tolian Soran zerlegt wurde.</Success>
+        <Keyword keywordWeight="MAX">James Tiberius Kirk</Keyword>
+		<Keyword>James</Keyword>
+		<Keyword>Tiberius</Keyword>
+		<Keyword>T.</Keyword>
+		<Keyword>Kirk</Keyword>
+    </Question>
+	
+    <Question category="Star Trek" question="Für welche Serie wurden die Kullisen von Star Trek: The Next Generation ursprünglich gebaut?" points="5" keywordWeight="2">
+		<Hint>Irgendwas mit Phasen ;)</Hint>
+		<Success>Sie würden ursprünglich für Star Trek: Phase II gebaut.</Success>
+		<Keyword>II</Keyword>
+		<Keyword>2</Keyword>
+		<Keyword>Phase</Keyword>
+    </Question>
+	
+    <Question category="Star Trek" question="Welchen Rang bzw. Posten hat Mr. Spock im elften Star Trek Film?" points="3" keywordWeight="1">
+		<Hint>Auf der Erde gibt es Gebäude, welche einen ähnlichen Namen tragen.</Hint>
+		<Success>Wie würde Botschafter Spock sagen: Leben Sie lange und in Frieden.</Success>
+		<Keyword>Botschafter</Keyword>
+    </Question>
+  </Quiz>
+  
+  <!-- Zitate -->
+  <Quotes>
+    <Quote author="Albert Einstein">Autoritätsdusel ist der größte Feind der Wahrheit.</Quote>
+	<Quote author="Claude Adrien Helvétius">Die Menschen verstehen einander nicht. Es gibt weniger Wahnsinnige als wir denken.</Quote>
+	<Quote author="Claude Adrien Helvétius">Wahrheit ist eine Fackel, die durch den Nebel leuchtet, ohne ihn zu vertreiben.</Quote>
+	<Quote author="Edsger Wybe Dijkstra">Es ist praktisch unmöglich, einem Studenten gutes Programmieren beizubringen, wenn er vorher in BASIC programmiert hat. Als potenzielle Programmierer sind sie geistig verstümmelt ohne Hoffnung auf Erholung.</Quote>
+	<Quote author="Edsger Wybe Dijkstra">Durch Testen kann man stets nur die Anwesenheit, nie aber die Abwesenheit von Fehlern beweisen.</Quote>
+	<Quote author="Edsger Wybe Dijkstra">Als es noch keine Computer gab, gab es auch das Programmieren als Problem nicht. Als es dann ein paar leistungsschwache Computer gab, wurde das Programmieren zu einem kleinen Problem und nun, wo wir leistungsstarke Computer haben, ist auch das Programmieren zu einem riesigen Problem angewachsen. In diesem Sinne hat die elektronische Industrie kein einziges Problem gelöst, sondern nur neue geschaffen.</Quote>
+    <Quote author="Joseph II. von Österreich">Mich wundert's, daß Sie darum fragen, die Glocken sind ja Ihre Artillerie!</Quote>
+    <Quote author="Rita Mae Brown">Wenn es in der Welt logisch zuginge, würden die Männer im Damensitz reiten.</Quote>
+	<Quote author="Waldemar Bonsels">Nur wer viel allein ist, lernt gut denken.</Quote>
+  </Quotes>
+</xml>
