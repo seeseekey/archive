@@ -23,7 +23,7 @@ for directory in `find $SCRIPTPATH -name ".git" -type d`;
 do
   echo $directory;
   cd $directory/..;
-  git pull;
+  git pull --all;
 done
 
 #Subversion
