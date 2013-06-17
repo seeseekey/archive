@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GPS Tagged Image Viewer</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="dist/leaflet.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="dist/leaflet.ie.css" /><![endif]-->
+	
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	
+	<script type="text/javascript" src="dist/leaflet.js"></script>
+	<script type="text/javascript" src="dist/Bing.js"></script>
+</head>
+<body>
+	<div id="map"></div>
+	
+	<script>
+	    //Optionen
+		var bingActive=true;
+		var centerLat=53.49577;
+		var centerLon=13.30873;
+		var zoomLevel=15;
+		
+		//Layer definieren
+		var bing = new L.BingLayer("apiKeyForBing: msdn.microsoft.com/en-us/library/ff428642.aspx");
+		
+		var cloudmade=new L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+		})
+		
+		var osm = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+		
+		//Map definieren
+		var map = L.map('map', {
+		    center: new L.LatLng(centerLat, centerLon),
+		    zoom: zoomLevel,
+		    layers: [bing, cloudmade, osm]
+		});
+		
+		map.addControl(new L.Control.Layers({"Bing":bing, 'Cloudmade':cloudmade, 'OpenStreetMap':osm}, {}));
+	</script>
+	
+	<script type="text/javascript" src="marker.js"></script>
+</body>
+</html>
