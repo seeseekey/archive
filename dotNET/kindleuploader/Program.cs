@@ -20,6 +20,7 @@ using System;
 using CSCL;
 using CSCL.Network;
 using System.Collections.Generic;
+using System.IO;
 
 namespace kindleuploader
 {
@@ -31,6 +32,27 @@ namespace kindleuploader
 		static string senderMail="";
 		static string smtpUsername="";
 		static string smtpPassword="";
+
+		static void ConvertTextFile(string file, string htmlFile)
+		{
+			string[] lines = File.ReadAllLines(file);
+
+			StreamWriter writer = new StreamWriter(htmlFile);
+			writer.WriteLine("<html>");
+			writer.WriteLine("<head>");
+			writer.WriteLine("</head>");
+			writer.WriteLine("<body>");
+
+			foreach(string line in lines)
+			{
+				writer.WriteLine("{0}<br/>", line);
+			}
+
+			writer.WriteLine("</body>");
+			writer.WriteLine("</html>");
+
+			writer.Close();
+		}
 
 		public static void Main(string[] args)
 		{
@@ -73,6 +95,17 @@ namespace kindleuploader
 			//Send Files
 			foreach(string file in files)
 			{
+				string fileSend = file;
+
+				//Preconvert
+				if(FileSystem.GetExtension(fileSend) == "txt") //Txt aufbereiten
+				{
+					string htmlFile = FileSystem.GetPath(file) + FileSystem.GetFilenameWithoutExt(file) + ".html";
+					ConvertTextFile(file, htmlFile);
+					fileSend = htmlFile;
+				}
+
+				//Sending
 				string subject = "";
 				if(convert)
 				{
@@ -80,7 +113,8 @@ namespace kindleuploader
 				}
 
 				Console.WriteLine("Send file {0}...", FileSystem.GetFilename(file));
-				SMTP.SendMailMessageWithAuthAndAttachment(smtpserver, smtpUsername, smtpPassword, senderMail, "kindleuploader", recieverMail, recieverMail, subject, "", file);
+				SMTP.SendMailMessageWithAuthAndAttachment(smtpserver, smtpUsername, smtpPassword, senderMail, "kindleuploader", recieverMail, recieverMail, subject, "", fileSend);
+				//FileSystem.RemoveFile(htmlFile);
 			}
 		}
 	}
