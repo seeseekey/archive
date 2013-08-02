@@ -26,7 +26,6 @@ using System.Windows.Forms;
 using CSCL;
 using Juliette.Graphic.TWAIN;
 using System.IO;
-using CSCL.Graphic;
 
 namespace Juliette
 {
@@ -302,7 +301,7 @@ namespace Juliette
 
 									//Datei in Temp schreiben
 									string dTable=Globals.GetDocumentDataTable(Globals.vcDmtID);
-									gtImage SaveImage=Globals.GetDocumentSiteAsImage(dTable, site);
+									CSCL.Imaging.Graphic SaveImage=Globals.GetDocumentSiteAsImage(dTable, site);
 									string fn=Globals.OptionsTempDirectory+CSCL.Helpers.StringHelpers.GetRandomASCIIString(10)+".png";
 									SaveImage.SaveToFile(fn);
 									Filelist.Add(fn);

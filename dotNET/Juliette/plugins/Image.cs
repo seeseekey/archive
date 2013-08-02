@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CSCL.Graphic;
 using System.Data;
 using System.IO;
 
@@ -59,9 +58,9 @@ namespace Juliette.Plugins
         /// Gibt ein Bitmap zurück
         /// </summary>
         /// <returns></returns>
-		public gtImage GetImage(string dmttable, int sitenumber)
+		public CSCL.Imaging.Graphic GetImage(string dmttable, int sitenumber)
         {
-            gtImage ret=new gtImage();
+			CSCL.Imaging.Graphic ret=new CSCL.Imaging.Graphic();
 
             try
             {
@@ -69,12 +68,12 @@ namespace Juliette.Plugins
                 DataTable tmpDT=Globals.InstSQLite.ExecuteQuery(sqlCommand);
 
                 MemoryStream ms=new MemoryStream((byte[])tmpDT.Rows[0]["DmtData"]);
-                ret=gtImage.FromStream(ms);
+				ret=CSCL.Imaging.Graphic.FromStream(ms);
                 ms.Close();
             }
             catch
             {
-				ret=new gtImage(1000, 800, gtImage.Format.RGB);
+				ret=new CSCL.Imaging.Graphic(1000, 800, CSCL.Imaging.Format.RGB);
 				ret.FillWithMandelbrot();
             }
 

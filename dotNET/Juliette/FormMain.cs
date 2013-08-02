@@ -27,7 +27,6 @@ using CSCL;
 using CSCL.Database;
 using System.Reflection;
 using System.IO;
-using CSCL.Graphic;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
@@ -969,7 +968,7 @@ namespace Juliette
 		private void printDocument_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
 		{
 			string dTable=Globals.GetDocumentDataTable(Globals.vcDmtID);
-			gtImage PrintImage=Globals.GetDocumentSiteAsImage(dTable, Globals.vcCurrentSitePrinter);
+			CSCL.Imaging.Graphic PrintImage=Globals.GetDocumentSiteAsImage(dTable, Globals.vcCurrentSitePrinter);
 
 			Graphics g=e.Graphics;
 			g.PageUnit=GraphicsUnit.Pixel;
@@ -1019,7 +1018,7 @@ namespace Juliette
 							{
 								//Bild aus Datenbank holen
 								string dTable=Globals.GetDocumentDataTable(ctnData.ID);
-								gtImage PngImage=Globals.GetDocumentSiteAsImage(dTable, i+1);
+								CSCL.Imaging.Graphic PngImage=Globals.GetDocumentSiteAsImage(dTable, i+1);
 
 								string savepath=folderBrowserDialog.SelectedPath+"\\"+
 												  FileSystem.GetValidFilename(ctnData.ElementName)+"-"+
@@ -1108,7 +1107,7 @@ namespace Juliette
 					{
 						int SiteNumber=cbSiteNumberView.SelectedIndex+1;
 						string dTable=Globals.GetDocumentDataTable(ctnData.ID);
-						gtImage SaveImage=Globals.GetDocumentSiteAsImage(dTable, SiteNumber);
+						CSCL.Imaging.Graphic SaveImage=Globals.GetDocumentSiteAsImage(dTable, SiteNumber);
 						string savename=String.Format("{0}{1}{2}.png", Globals.OptionsTempDirectory, CSCL.Helpers.StringHelpers.GetRandomASCIIString(8), SiteNumber);
 						SaveImage.SaveToFile(savename);
 
@@ -1144,7 +1143,7 @@ namespace Juliette
 					{
 						int SiteNumber=cbSiteNumberView.SelectedIndex+1;
 						string dTable=Globals.GetDocumentDataTable(ctnData.ID);
-						gtImage SaveImage=Globals.GetDocumentSiteAsImage(dTable, SiteNumber);
+						CSCL.Imaging.Graphic SaveImage=Globals.GetDocumentSiteAsImage(dTable, SiteNumber);
 						string savename=String.Format("{0}{1}{2}.png", Globals.OptionsTempDirectory, CSCL.Helpers.StringHelpers.GetRandomASCIIString(8), SiteNumber);
 						SaveImage.SaveToFile(savename);
 
@@ -1288,7 +1287,7 @@ namespace Juliette
 					{
 						//Bild aus Datenbank holen
 						string dTable=Globals.GetDocumentDataTable(DmtIndex);
-						gtImage tmp=Globals.GetDocumentSiteAsImage(dTable, i+1);
+						CSCL.Imaging.Graphic tmp=Globals.GetDocumentSiteAsImage(dTable, i+1);
 
 						uint SideSize=2000;
 

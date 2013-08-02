@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
-using CSCL.Graphic;
+using CSCL.Imaging;
 
 namespace Juliette.Plugins
 {
@@ -41,6 +41,6 @@ namespace Juliette.Plugins
         /// Gibt ein Bitmap zurück
         /// </summary>
         /// <returns></returns>
-        gtImage GetImage(string dmttable, int sitenumber);
+		CSCL.Imaging.Graphic GetImage(string dmttable, int sitenumber);
     }
 }

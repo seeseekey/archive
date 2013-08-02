@@ -19,10 +19,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CSCL.Graphic;
 using System.Data;
 using System.IO;
 using AODL.Document.TextDocuments;
+using CSCL.Imaging;
 
 namespace Juliette.Plugins
 {
@@ -57,9 +57,9 @@ namespace Juliette.Plugins
 		/// Gibt ein Bitmap zurück
 		/// </summary>
 		/// <returns></returns>
-		public gtImage GetImage(string dmttable, int sitenumber)
+		public CSCL.Imaging.Graphic GetImage(string dmttable, int sitenumber)
 		{
-			gtImage ret=new gtImage();
+			CSCL.Imaging.Graphic ret=new CSCL.Imaging.Graphic();
 
 			try
 			{
@@ -80,7 +80,7 @@ namespace Juliette.Plugins
 						}
 					default:
 						{
-							ret=new gtImage(400, 800, gtImage.Format.RGB);
+							ret=new CSCL.Imaging.Graphic(400, 800, Format.RGB);
 							ret.FillWithMandelbrot();
 							break;
 						}
@@ -94,23 +94,6 @@ namespace Juliette.Plugins
 			{
 				throw new Exception();
 			}
-
-			//string file=AARunMeFirstAndOnce.inPutFolder+@"hallo.odt";
-			//FileInfo fInfo=new FileInfo(file);
-			//Load a text document 
-			//TextDocument textDocument=new TextDocument();
-			//textDocument.Load
-			//textDocument.Load(file);
-			////Save it back again
-			//textDocument.SaveTo(AARunMeFirstAndOnce.outPutFolder+fInfo.Name+".html");
-
-			//string file=AARunMeFirstAndOnce.inPutFolder+@"hallo.odt";
-			//FileInfo fInfo=new FileInfo(file);
-			////Load a text document 
-			//TextDocument textDocument=new TextDocument();
-			//textDocument.Load(file);
-			////Save it back again
-			//textDocument.SaveTo(AARunMeFirstAndOnce.outPutFolder+fInfo.Name+".html");
 
 			return ret;
 		}

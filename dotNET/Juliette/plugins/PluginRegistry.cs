@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CSCL.Graphic;
 using System.Data;
 
 namespace Juliette.Plugins
@@ -67,7 +66,7 @@ namespace Juliette.Plugins
 		/// <param name="dmttable"></param>
 		/// <param name="sitenumber"></param>
 		/// <returns></returns>
-		public gtImage GetImage(string dmttable, int sitenumber)
+		public CSCL.Imaging.Graphic GetImage(string dmttable, int sitenumber)
 		{
 			//Filetype ermitteln
 			string sqlCommand=String.Format("SELECT DmtSiteNumber, DmtFileType, DmtData FROM \"{0}\" WHERE DmtSiteNumber={1};", dmttable, sitenumber);

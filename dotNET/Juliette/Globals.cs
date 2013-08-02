@@ -25,7 +25,6 @@ using System.Drawing;
 using System.Data;
 using System.IO;
 using System.Windows.Forms;
-using CSCL.Graphic;
 using System.Threading;
 using System.Diagnostics;
 using Juliette.Plugins;
@@ -70,7 +69,7 @@ namespace Juliette
 
 		#region Variablen und Konstanten
 		public static SQLite InstSQLite;
-		public static gtImage ViewImage;
+		public static CSCL.Imaging.Graphic ViewImage;
 
 		public static int scToleranz=16;
 		public static int vcSiteCount;
@@ -102,7 +101,7 @@ namespace Juliette
 			return tmpDT.Rows[0]["DmtTable"].ToString();
 		}
 
-		public static gtImage GetDocumentSiteAsImage(string DmtTable, int site)
+		public static CSCL.Imaging.Graphic GetDocumentSiteAsImage(string DmtTable, int site)
 		{
 			return PluginRegistryMain.GetImage(DmtTable, site);
 		}
