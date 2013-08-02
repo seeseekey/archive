@@ -36,9 +36,9 @@ namespace kindleuploader
 
 		static void ConvertTextFile(string file, string htmlFile)
 		{
-			string[] lines = File.ReadAllLines(file);
+			string[] lines=File.ReadAllLines(file);
 
-			StreamWriter writer = new StreamWriter(htmlFile);
+			StreamWriter writer=new StreamWriter(htmlFile);
 			writer.WriteLine("<html>");
 			writer.WriteLine("<head>");
 			writer.WriteLine("</head>");
@@ -75,9 +75,11 @@ namespace kindleuploader
 
 			//Files
 			Dictionary<string, string> commandLine=CommandLineHelpers.GetCommandLine(args);
-			List<string> files = new List<string>();
+			List<string> files=new List<string>();
 
-			bool convert = commandLine.ContainsKey("convert");
+			bool convert=commandLine.ContainsKey("convert");
+			bool merge=commandLine.ContainsKey("merge");
+
 
 			List<string> clFiles=CommandLineHelpers.GetFilesFromCommandline(commandLine);
 
@@ -93,24 +95,71 @@ namespace kindleuploader
 				}
 			}
 
+			if(files.Count==0)
+			{
+				Console.WriteLine("No files specified.");
+				return;
+			}
+
+
+			if(merge)
+			{
+				string name=FileSystem.GetValidFilename(files[0]) + " (merged).html";
+				StreamWriter writer=new StreamWriter(name);
+
+				writer.WriteLine("<html>");
+				writer.WriteLine("<head>");
+				writer.WriteLine("</head>");
+				writer.WriteLine("<body>");
+
+
+				foreach(string file in files)
+				{
+					string[] lines=File.ReadAllLines(file);
+
+					if(FileSystem.GetExtension(file)=="txt") //Txt aufbereiten
+					{
+						foreach(string line in lines)
+						{
+							writer.WriteLine("{0}<br/>", line);
+						}
+					}
+					else
+					{
+						foreach(string line in lines)
+						{
+							writer.WriteLine(line);
+						}
+					}
+				}
+
+				writer.WriteLine("</body>");
+				writer.WriteLine("</html>");
+
+				writer.Close();
+
+				files.Clear();
+				files.Add(name);
+			}
+
 			//Send Files
 			foreach(string file in files)
 			{
-				string fileSend = file;
+				string fileSend=file;
 
 				//Preconvert
-				if(FileSystem.GetExtension(fileSend) == "txt") //Txt aufbereiten
+				if(FileSystem.GetExtension(fileSend)=="txt") //Txt aufbereiten
 				{
-					string htmlFile = FileSystem.GetPath(file) + FileSystem.GetFilenameWithoutExt(file) + ".html";
+					string htmlFile=FileSystem.GetPath(file)+FileSystem.GetFilenameWithoutExt(file)+".html";
 					ConvertTextFile(file, htmlFile);
-					fileSend = htmlFile;
+					fileSend=htmlFile;
 				}
 
 				//Sending
-				string subject = "";
+				string subject="";
 				if(convert)
 				{
-					subject = "convert";
+					subject="convert";
 				}
 
 				Console.WriteLine("Send file {0}...", FileSystem.GetFilename(file));
