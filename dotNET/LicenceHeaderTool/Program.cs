@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using CSCL;
 using System.IO;
+using CSCL.Helpers;
 
 namespace LicenceHeaderTool
 {
@@ -36,21 +37,6 @@ namespace LicenceHeaderTool
 			Console.WriteLine("  z.B. LicenceHeaderTool -GPLv3 /test seeseekey seeseekey@example.org \"2011, 2012\"");
 			Console.WriteLine("");
 			Console.WriteLine("  -GPLv3 <-overwrite> <projectPath> <author> <mail> <year>");
-		}
-
-		static List<string> GetFilesFromParameters(Parameters param)
-		{
-			List<string> ret=new List<string>();
-
-			foreach(string i in param.GetNames())
-			{
-				if(i.StartsWith("file"))
-				{
-					ret.Add(param.GetString(i));
-				}
-			}
-
-			return ret;
 		}
 
 		#region Licences
@@ -230,11 +216,11 @@ namespace LicenceHeaderTool
 		static void Main(string[] args)
 		{
 			//Parameter auswerten
-			Parameters parameters=null;
+			Dictionary<string, string> parameters=null;
 
 			try
 			{
-				parameters=Parameters.InterpretCommandLine(args);
+				parameters=CommandLineHelpers.GetCommandLine(args);
 			}
 			catch
 			{
@@ -245,8 +231,7 @@ namespace LicenceHeaderTool
 			}
 
 			//Aktion starten
-
-			List<string> files=GetFilesFromParameters(parameters);
+			List<string> files=CommandLineHelpers.GetFilesFromCommandline(parameters);
 
 			if(files.Count<4)
 			{
@@ -262,10 +247,10 @@ namespace LicenceHeaderTool
 
 				License license=License.GPLv3;
 
-				if(parameters.GetBool("GPLv3")) license=License.GPLv3;
-				else if(parameters.GetBool("InvertikaGPLv3")) license=License.InvertikaGPLv3;
+				if(parameters.ContainsKey("GPLv3")) license=License.GPLv3;
+				else if(parameters.ContainsKey("InvertikaGPLv3")) license=License.InvertikaGPLv3;
 
-				ProcessFiles(projectPath, parameters.GetBool("overwrite"), author, mail, year, license);
+				ProcessFiles(projectPath, parameters.ContainsKey("overwrite"), author, mail, year, license);
 			}
 		}
 	}

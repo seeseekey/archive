@@ -20,6 +20,7 @@ using System;
 using CSCL;
 using CSCL.Network;
 using System.Collections.Generic;
+using CSCL.Helpers;
 
 namespace kindleuploader
 {
@@ -51,12 +52,12 @@ namespace kindleuploader
 			smtpPassword=Options.GetElementAsString("xml.SMTP.Password");
 
 			//Files
-			Parameters commandLine=Parameters.InterpretCommandLine(args);
+			Dictionary<string, string> commandLine=CommandLineHelpers.GetCommandLine(args);
 			List<string> files = new List<string>();
 
-			bool convert = commandLine.GetBool("convert", false);
+			bool convert = commandLine.ContainsKey("convert");
 
-			List<string> clFiles=commandLine.GetFilesFromParameters();
+			List<string> clFiles=CommandLineHelpers.GetFilesFromCommandline(commandLine);
 
 			foreach(string clFile in clFiles)
 			{
