@@ -96,7 +96,7 @@ namespace CloudFileSync
 			if(clientid=="")
 			{
 				string uniqueID=Various.GetUniqueID();
-				string uniqueIDSHA1=Hash.SHA1.HashStringToSHA1(uniqueID);
+				string uniqueIDSHA1=Hash.SHA1.HashString(uniqueID);
 
 				clientid=uniqueIDSHA1;
 				Globals.Options.WriteElement("xml.Options.Misc.ClientID", uniqueIDSHA1);
@@ -294,7 +294,7 @@ namespace CloudFileSync
 					{
 						string relFilename=FileSystem.GetRelativePath(file, syncFolder, true);
 						string hashRemote=GetHistoryHash(client, relFilename);
-						string hashLocal=Hash.SHA1.HashFileToSHA1(file);
+						string hashLocal=Hash.SHA1.HashFile(file);
 
 						if(hashRemote!=hashLocal)
 						{
@@ -595,7 +595,7 @@ namespace CloudFileSync
 
 			//Updatedatei anlegen
 			string uniqueID=Various.GetUniqueID();
-			string uniqueIDSHA1=Hash.SHA1.HashStringToSHA1(uniqueID);
+			string uniqueIDSHA1=Hash.SHA1.HashString(uniqueID);
 
 			string filenameLocal=FileSystem.TempPath+uniqueIDSHA1;
 
@@ -816,7 +816,7 @@ namespace CloudFileSync
 			string fileNameFTP=relFilename.Replace("/", "\\");
 			fileNameFTP="h-data/"+fileNameFTP;
 
-			string fileHash=Hash.SHA1.HashFileToSHA1(file);
+			string fileHash=Hash.SHA1.HashFile(file);
 
 			if(client.Exists(fileNameFTP)) //Neuen Hash hinzufügen
 			{
