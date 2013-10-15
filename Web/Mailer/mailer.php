@@ -1,6 +1,6 @@
 <?php
-    $senderName="Mailer";
-    $sender="mailer@example.org";
+    $senderName=$_POST["sendername"];;
+    $sender=$_POST["sender"];
     $reciever=$_POST["reciever"];
     $allowedRecieverDomain="example.org";
     $subject=$_POST["subject"];
