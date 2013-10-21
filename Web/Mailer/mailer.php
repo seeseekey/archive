@@ -18,6 +18,6 @@
 
     if(!(strpos($reciever, "@" . $allowedRecieverDomain)===FALSE))
     {
-        mail($reciever, $subject . " - (" . date("d.m.y - H:m:s") . ")", $text, "From: $senderName <$sender>");
+        mail($reciever, $subject, $text, "From: $senderName <$sender>");
     }
 ?>
