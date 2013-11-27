@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xml>
+  <SMTP>
+    <Server>smtp.example.com</Server>
+	<Username>test</Username>
+	<Password>geheim</Password>
+    <SenderMail>webmaster@example.com</SenderMail>
+    <RecieverMail>test@example.com</RecieverMail>
+  </SMTP>
+</xml>
