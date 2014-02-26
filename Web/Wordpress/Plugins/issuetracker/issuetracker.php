@@ -290,11 +290,11 @@ class issuetracker {
 
     function it_styles() {
         echo '
-	<link type="text/css" rel="stylesheet" href="' . site_url() . '/wp-content/plugins/issuetracker/style.css">
-	<script type="text/javascript" src="' . site_url() . '/wp-content/plugins/issuetracker/javascript/javascripts.js"></script>
+	<link type="text/css" rel="stylesheet" href="' . plugins_url('style.css', __FILE__ ) . '">
+	<script type="text/javascript" src="' . plugins_url('javascript/javascripts.js', __FILE__ ) . '"></script>
 	
 	<script type="text/javascript">
-		var PLUGIN_URI = "' . site_url() . '/wp-content/plugins/issuetracker/";
+		var PLUGIN_URI = "' . plugins_url('', __FILE__ ) . '";
 		var POST_GUID = "' . $this->build_url() . '";
 	</script>
 	';

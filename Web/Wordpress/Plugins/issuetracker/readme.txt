@@ -1,7 +1,7 @@
 === IssueTracker ===
 Contributors: kamasheto 
 Tags: issue tracker, tracker
-Requires at least: 2.7
+Requires at least: 3.0
 Tested up to: 3.8.1
 Stable tag: /trunk/
 License: GPLv2 or later
@@ -30,4 +30,4 @@ Settings for the plugin could be found under Settings >> Issue Tracker
 == Changelog ==
 = 0.1 =
 
-First initial release of IssueTracker´
+First initial release of IssueTracker
