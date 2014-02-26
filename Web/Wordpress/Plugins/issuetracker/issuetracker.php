@@ -268,7 +268,7 @@ class issuetracker {
 
     function it_admin_styles() {
         echo '
-	<script type="text/javascript" src="' . site_url() . '/wp-content/plugins/issuetracker/javascript/jquery.tablednd.js" />
+	<script type="text/javascript" src="' . plugins_url('javascript/jquery.tablednd.js', __FILE__ ) .'"/>
 	<script type="text/javascript" charset="utf-8">
 		jQuery(document).ready(function(){
 			jQuery("#types_table").tableDnD()
@@ -294,7 +294,7 @@ class issuetracker {
 	<script type="text/javascript" src="' . plugins_url('javascript/javascripts.js', __FILE__ ) . '"></script>
 	
 	<script type="text/javascript">
-		var PLUGIN_URI = "' . plugins_url('', __FILE__ ) . '";
+		var PLUGIN_URI = "' . plugins_url('', __FILE__ ) . '/";
 		var POST_GUID = "' . $this->build_url() . '";
 	</script>
 	';
@@ -399,7 +399,7 @@ class issuetracker {
         $user = wp_get_current_user();
         $strike = $issue->status_strike ? 'strike' : '';
         $issue->issue_time = date($this->dateFormat, $issue->issue_time);
-        $plugin_url = site_url() . '/wp-content/plugins/issuetracker/';
+        $plugin_url = plugins_url('', __FILE__) . "/";
         $starred = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}it_starred
 											WHERE user_id = %d AND issue_id = %d", $user->ID, $id));
 
@@ -412,7 +412,7 @@ class issuetracker {
 		</div>';
         }
 
-        $attachmentLink = site_url() . '/wp-content/issuetracker/' . $issue->issue_attachment;
+        $attachmentLink = content_url() . '/issuetracker/' . $issue->issue_attachment;
         $onoff = $starred ? 'on' : 'off';
         $issue->issue_summary = ($issue->issue_summary);
         $issue->issue_description_bred = nl2br($issue->issue_description);
@@ -477,7 +477,7 @@ HTML;
         $content .= '<div id="comments"><h3 id="comments-title">' . number_format(count($comments)) . ' ' . $this->__comments . '</h3> <ol class="commentlist">';
 
         foreach ($comments as $comment) {
-            $attachmentLinkComment = site_url() . '/wp-content/issuetracker/' . $comment->comment_attachment;
+            $attachmentLinkComment = content_url() . "/issuetracker/" . $comment->comment_attachment;
 
             $comment->comment_body = ($comment->comment_body);
             $comment->comment_time = date($this->dateFormat, $comment->comment_time);
@@ -695,7 +695,7 @@ HTML;
                 } else {
                     $filename = basename($_FILES['userfile']['name']);
 
-                    $uploaddir = WP_CONTENT_DIR . "/issuetracker/";
+                    $uploaddir = content_url() . "/issuetracker/";
                     $uploadfile = $uploaddir . $filename;
 
                     //check if file with this name exist
@@ -893,7 +893,7 @@ STAR;
 		</tr>
 HTML;
 
-        $plugin_url = site_url() . '/wp-content/plugins/issuetracker/';
+        $plugin_url = plugins_url('', __FILE__) . "/";
         $issues = $this->it_get_issues($tracker_id);
 
         foreach ($issues as $issue) {
