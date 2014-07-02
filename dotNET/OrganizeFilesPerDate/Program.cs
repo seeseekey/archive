@@ -11,12 +11,14 @@ namespace OrganizeFilesPerDate
         static void Main(string[] args)
         {
             //Parameter <move/copy> <sort/rename> <input> <output>
-			
+            //Parameter <mode> <move/copy> <sort/rename> <input> <output>
+
             #region Upload Sorting
-            bool move = args [0] == "move";
-            bool sort = args [1] == "sort";
-            string pathInput = args [2].Trim(new char[] {'"'});
-            string pathOutput = args [3].Trim(new char[] {'"'});
+            bool date = args[0] == "date";
+            bool move = args [1] == "move";
+            bool sort = args [2] == "sort";
+            string pathInput = args [3].Trim(new char[] {'"'});
+            string pathOutput = args [4].Trim(new char[] {'"'});
 
             FileSystem.CreateDirectory(pathOutput);
 

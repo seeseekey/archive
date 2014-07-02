@@ -87,7 +87,7 @@ namespace evernoteuploader
 
 				//CSCL.
 				//Sending
-				string subject = FileSystem.GetFilenameWithoutExt(file);
+				string subject=FileSystem.GetFilenameWithoutExt(file);
 				if(book)
 				{
 					subject = String.Format("{0} @{1}", subject, bookname);
