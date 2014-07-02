@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.IO;
-using AODL.Document.TextDocuments;
 using CSCL.Imaging;
 
 namespace Juliette.Plugins
@@ -74,7 +73,7 @@ namespace Juliette.Plugins
 				{
 					case "odt":
 						{
-							TextDocument odtDocument=new TextDocument();
+							//TextDocument odtDocument=new TextDocument();
 							//odtDocument.Load
 							break;
 						}

@@ -185,14 +185,6 @@
       <Project>{0E720343-5366-4C3A-BC59-7B7FD2C311B5}</Project>
       <Name>CSCL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Externals\ADOL\AODL.csproj">
-      <Project>{89E926D3-3471-47C8-8D34-01FF2AF72F71}</Project>
-      <Name>AODL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Externals\PdfSharp\PdfSharp.csproj">
-      <Project>{5384CE57-1F94-4D22-860D-2E9C1AC12DDF}</Project>
-      <Name>PdfSharp</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="gt-logo-about.png" />

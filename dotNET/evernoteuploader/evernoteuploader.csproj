@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AEE8C992-E7DE-4D1B-B4D3-48F44A287FA6}</ProjectGuid>
+    <ProjectGuid>{BEE8C992-E7DE-4D1B-B4D3-48F44A287FA7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>evernoteuploader</RootNamespace>
     <AssemblyName>evernoteuploader</AssemblyName>

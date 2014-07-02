@@ -27,9 +27,6 @@ using CSCL;
 using CSCL.Database;
 using System.Reflection;
 using System.IO;
-using PdfSharp.Drawing;
-using PdfSharp.Pdf;
-using PdfSharp.Pdf.IO;
 using CSCL.Helpers;
 using CSCL.Database.SQLite;
 
@@ -758,41 +755,41 @@ namespace Juliette
 
 						if(saveFileDialog.ShowDialog()==DialogResult.OK)
 						{
-							string pdfFilename=saveFileDialog.FileName;
-
-							PdfDocument Document=new PdfDocument();
-
-							Document.Info.Title=ctnData.ElementName;
-							Document.Info.Creator="Juliette";
-							Document.Info.CreationDate=DateTime.Now;
-							Document.Info.Subject=ctnData.ElementDescription;
-							Document.Info.Keywords="";
-
-							//Dokument zeichenn
-							for(int i=0;i<ctnData.SiteCount;i++)
-							{
-								//Bild aus Datenbank holen
-								string dTable=Globals.GetDocumentDataTable(ctnData.ID);
-								Image PdfImage=Globals.GetDocumentSiteAsImage(dTable, i+1).ToBitmap();
-
-								//Neue Seite
-								PdfPage tmpPdfPage=Document.AddPage();
-
-								double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
-								double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
-
-								tmpPdfPage.Width=WidthInPt;
-								tmpPdfPage.Height=HeightInPt;
-
-								XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
-
-								//Bild reinmalen
-								XImage image=XImage.FromGdiPlusImage(PdfImage);
-								gfx.DrawImage(image, 0, 0);
-							}
-
-							//Dokument speichern
-							Document.Save(pdfFilename);
+//							string pdfFilename=saveFileDialog.FileName;
+//
+//							PdfDocument Document=new PdfDocument();
+//
+//							Document.Info.Title=ctnData.ElementName;
+//							Document.Info.Creator="Juliette";
+//							Document.Info.CreationDate=DateTime.Now;
+//							Document.Info.Subject=ctnData.ElementDescription;
+//							Document.Info.Keywords="";
+//
+//							//Dokument zeichenn
+//							for(int i=0;i<ctnData.SiteCount;i++)
+//							{
+//								//Bild aus Datenbank holen
+//								string dTable=Globals.GetDocumentDataTable(ctnData.ID);
+//								Image PdfImage=Globals.GetDocumentSiteAsImage(dTable, i+1).ToBitmap();
+//
+//								//Neue Seite
+//								PdfPage tmpPdfPage=Document.AddPage();
+//
+//								double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
+//								double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
+//
+//								tmpPdfPage.Width=WidthInPt;
+//								tmpPdfPage.Height=HeightInPt;
+//
+//								XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
+//
+//								//Bild reinmalen
+//								XImage image=XImage.FromGdiPlusImage(PdfImage);
+//								gfx.DrawImage(image, 0, 0);
+//							}
+//
+//							//Dokument speichern
+//							Document.Save(pdfFilename);
 						}
 
 						break;
@@ -1209,42 +1206,42 @@ namespace Juliette
 					string pdfFilename=FileSystem.GetPathWithPathDelimiter(folderBrowserDialog.SelectedPath)+FileSystem.GetValidFilename(DmtLabel+"_("+DmtIndex+").pdf");
 					if(FileSystem.ExistsFile(pdfFilename)) continue;
 
-					PdfDocument Document=new PdfDocument();
-
-					Document.Info.Title=DmtLabel;
-					Document.Info.Creator="Juliette";
-					Document.Info.CreationDate=DateTime.Now;
-					Document.Info.Subject=DmtDescription;
-					Document.Info.Keywords="";
-
-					//Dokument zeichenn
-					for(int i=0;i<DmtSiteCount;i++)
-					{
-						//Bild aus Datenbank holen
-						string dTable=Globals.GetDocumentDataTable(DmtIndex);
-						Image PdfImage=Globals.GetDocumentSiteAsImage(dTable, i+1).ToBitmap();
-
-						//Neue Seite
-						PdfPage tmpPdfPage=Document.AddPage();
-
-						double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
-						double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
-
-						tmpPdfPage.Width=WidthInPt;
-						tmpPdfPage.Height=HeightInPt;
-
-						XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
-
-						//Bild reinmalen
-						XImage image=XImage.FromGdiPlusImage(PdfImage);
-						gfx.DrawImage(image, 0, 0);
-
-						GC.Collect(3);
-					}
-
-					//Dokument speichern
-					Document.Save(pdfFilename);
-					GC.Collect(3);
+//					PdfDocument Document=new PdfDocument();
+//
+//					Document.Info.Title=DmtLabel;
+//					Document.Info.Creator="Juliette";
+//					Document.Info.CreationDate=DateTime.Now;
+//					Document.Info.Subject=DmtDescription;
+//					Document.Info.Keywords="";
+//
+//					//Dokument zeichenn
+//					for(int i=0;i<DmtSiteCount;i++)
+//					{
+//						//Bild aus Datenbank holen
+//						string dTable=Globals.GetDocumentDataTable(DmtIndex);
+//						Image PdfImage=Globals.GetDocumentSiteAsImage(dTable, i+1).ToBitmap();
+//
+//						//Neue Seite
+//						PdfPage tmpPdfPage=Document.AddPage();
+//
+//						double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
+//						double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
+//
+//						tmpPdfPage.Width=WidthInPt;
+//						tmpPdfPage.Height=HeightInPt;
+//
+//						XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
+//
+//						//Bild reinmalen
+//						XImage image=XImage.FromGdiPlusImage(PdfImage);
+//						gfx.DrawImage(image, 0, 0);
+//
+//						GC.Collect(3);
+//					}
+//
+//					//Dokument speichern
+//					Document.Save(pdfFilename);
+//					GC.Collect(3);
 				}
 			}
 		}
@@ -1274,73 +1271,73 @@ namespace Juliette
 					string pdfFilename=FileSystem.GetPathWithPathDelimiter(folderBrowserDialog.SelectedPath)+FileSystem.GetValidFilename(DmtLabel+"_("+DmtIndex+").pdf");
 					if(FileSystem.ExistsFile(pdfFilename)) continue;
 
-					PdfDocument Document=new PdfDocument();
-
-					Document.Info.Title=DmtLabel;
-					Document.Info.Creator="Juliette";
-					Document.Info.CreationDate=DateTime.Now;
-					Document.Info.Subject=DmtDescription;
-					Document.Info.Keywords="";
-
-					//Dokument zeichenn
-					for(int i=0;i<DmtSiteCount;i++)
-					{
-						//Bild aus Datenbank holen
-						string dTable=Globals.GetDocumentDataTable(DmtIndex);
-						CSCL.Imaging.Graphic tmp=Globals.GetDocumentSiteAsImage(dTable, i+1);
-
-						uint SideSize=2000;
-
-						if(tmp.Width>SideSize||tmp.Height>SideSize)
-						{
-							uint newWidth=0, newHeight=0;
-
-							double Verhaeltniss=((double)tmp.Height)/tmp.Width;
-
-							if(tmp.Width==tmp.Height)
-							{
-								newWidth=SideSize;
-								newHeight=SideSize;
-							}
-							else if(tmp.Width<tmp.Height) //Breite ist schmalste Seite
-							{
-								newWidth=SideSize;
-								newHeight=(uint)(newWidth*Verhaeltniss);
-							}
-							else //Höhe ist schmalste Seite
-							{
-								newHeight=SideSize;
-								newWidth=(uint)(newHeight/Verhaeltniss);
-							}
-
-							tmp=tmp.Resize(newWidth, newHeight);
-
-							GC.Collect(3);
-						}
-
-						Image PdfImage=tmp.ToBitmap();
-
-						//Neue Seite
-						PdfPage tmpPdfPage=Document.AddPage();
-
-						double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
-						double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
-
-						tmpPdfPage.Width=WidthInPt;
-						tmpPdfPage.Height=HeightInPt;
-
-						XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
-
-						//Bild reinmalen
-						XImage image=XImage.FromGdiPlusImage(PdfImage);
-						gfx.DrawImage(image, 0, 0);
-
-						GC.Collect(3);
-					}
-
-					//Dokument speichern
-					Document.Save(pdfFilename);
-					GC.Collect(3);
+//					PdfDocument Document=new PdfDocument();
+//
+//					Document.Info.Title=DmtLabel;
+//					Document.Info.Creator="Juliette";
+//					Document.Info.CreationDate=DateTime.Now;
+//					Document.Info.Subject=DmtDescription;
+//					Document.Info.Keywords="";
+//
+//					//Dokument zeichenn
+//					for(int i=0;i<DmtSiteCount;i++)
+//					{
+//						//Bild aus Datenbank holen
+//						string dTable=Globals.GetDocumentDataTable(DmtIndex);
+//						CSCL.Imaging.Graphic tmp=Globals.GetDocumentSiteAsImage(dTable, i+1);
+//
+//						uint SideSize=2000;
+//
+//						if(tmp.Width>SideSize||tmp.Height>SideSize)
+//						{
+//							uint newWidth=0, newHeight=0;
+//
+//							double Verhaeltniss=((double)tmp.Height)/tmp.Width;
+//
+//							if(tmp.Width==tmp.Height)
+//							{
+//								newWidth=SideSize;
+//								newHeight=SideSize;
+//							}
+//							else if(tmp.Width<tmp.Height) //Breite ist schmalste Seite
+//							{
+//								newWidth=SideSize;
+//								newHeight=(uint)(newWidth*Verhaeltniss);
+//							}
+//							else //Höhe ist schmalste Seite
+//							{
+//								newHeight=SideSize;
+//								newWidth=(uint)(newHeight/Verhaeltniss);
+//							}
+//
+//							tmp=tmp.Resize(newWidth, newHeight);
+//
+//							GC.Collect(3);
+//						}
+//
+//						Image PdfImage=tmp.ToBitmap();
+//
+//						//Neue Seite
+//						PdfPage tmpPdfPage=Document.AddPage();
+//
+//						double WidthInPt=PdfImage.Width*72/PdfImage.HorizontalResolution;
+//						double HeightInPt=PdfImage.Height*72/PdfImage.HorizontalResolution;
+//
+//						tmpPdfPage.Width=WidthInPt;
+//						tmpPdfPage.Height=HeightInPt;
+//
+//						XGraphics gfx=XGraphics.FromPdfPage(tmpPdfPage);
+//
+//						//Bild reinmalen
+//						XImage image=XImage.FromGdiPlusImage(PdfImage);
+//						gfx.DrawImage(image, 0, 0);
+//
+//						GC.Collect(3);
+//					}
+//
+//					//Dokument speichern
+//					Document.Save(pdfFilename);
+//					GC.Collect(3);
 				}
 			}
 		}
