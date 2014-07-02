@@ -64,7 +64,6 @@ namespace PdfSharp.Forms
         this.color = value;
         if (value.IsKnownColor)
         {
-          XKnownColor color = XColorResourceManager.GetKnownColor(value.Argb);
           for (int idx = 1; idx < Items.Count; idx++)
           {
             if (((ColorItem)Items[idx]).Color.Argb == value.Argb)

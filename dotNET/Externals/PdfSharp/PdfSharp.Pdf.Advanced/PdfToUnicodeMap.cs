@@ -125,7 +125,6 @@ namespace PdfSharp.Pdf.Advanced
         Elements.SetName("/Filter", "/FlateDecode");
         bytes = Filtering.FlateDecode.Encode(bytes);
       }
-      PdfStream stream = CreateStream(bytes);
     }
 
     public sealed class Keys : PdfDictionary.PdfStream.Keys

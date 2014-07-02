@@ -268,4 +268,3 @@ namespace AODL.Document.Styles
 		}
 	}
 }
-

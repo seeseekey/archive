@@ -231,4 +231,3 @@ namespace AODL.Document.Content.Charts
 
 	}
 }
-

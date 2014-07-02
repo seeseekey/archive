@@ -757,4 +757,3 @@ namespace AODL.Document .Styles .Properties
 		#endregion
 	}
 }
-
