@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ircObserver", "ircObserver.csproj", "{15364F98-BEB8-4871-91E7-9FFF9342F168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCL", "..\..\..\CSCL\CSCL\CSCL.csproj", "{0E720343-5366-4C3A-BC59-7B7FD2C311B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15364F98-BEB8-4871-91E7-9FFF9342F168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15364F98-BEB8-4871-91E7-9FFF9342F168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15364F98-BEB8-4871-91E7-9FFF9342F168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15364F98-BEB8-4871-91E7-9FFF9342F168}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = ircObserver.csproj
+	EndGlobalSection
+EndGlobal
