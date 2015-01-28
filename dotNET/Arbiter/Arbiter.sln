@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbiter", "Arbiter.csproj", "{C7B8D0DC-0E12-4F39-BA5A-04F8E01E040A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSCL", "..\..\..\CSCL\CSCL\CSCL.csproj", "{0E720343-5366-4C3A-BC59-7B7FD2C311B5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E720343-5366-4C3A-BC59-7B7FD2C311B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B8D0DC-0E12-4F39-BA5A-04F8E01E040A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B8D0DC-0E12-4F39-BA5A-04F8E01E040A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B8D0DC-0E12-4F39-BA5A-04F8E01E040A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B8D0DC-0E12-4F39-BA5A-04F8E01E040A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Arbiter.csproj
+	EndGlobalSection
+EndGlobal
