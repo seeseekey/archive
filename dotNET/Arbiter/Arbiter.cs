@@ -281,6 +281,8 @@ namespace Arbiter
                     string msg="Another exception: "+ex.Message;
                     Console.WriteLine(msg);
                 }
+
+				Thread.Sleep(75000);
             }
         }
     }
