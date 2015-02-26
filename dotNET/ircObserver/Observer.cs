@@ -168,6 +168,8 @@ namespace ircObserver
                         Conversion.Add(msg);
                         Console.WriteLine(msg);
                     }
+
+					Thread.Sleep(75000);
                 }
             }); 
         }
