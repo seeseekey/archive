@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CSCL;
+using Xevle.IO;
 
 namespace OrganizeFilesPerDate
 {
@@ -20,13 +18,13 @@ namespace OrganizeFilesPerDate
             string pathInput = args [3].Trim(new char[] {'"'});
             string pathOutput = args [4].Trim(new char[] {'"'});
 
-            FileSystem.CreateDirectory(pathOutput);
+            DirectoryOperations.CreateDirectory(pathOutput);
 
-            List<string> files = FileSystem.GetFiles(pathInput, true);
+            List<string> files = FileOperations.GetFiles(pathInput, true);
 
             foreach (string file in files)
             {
-                DateTime dt = FileSystem.GetFileDateTime(file);
+                DateTime dt = FileOperations.GetFileDateTime(file);
 
                 string year = dt.Year.ToString();
                 string month = dt.Month.ToString("00");
@@ -36,20 +34,20 @@ namespace OrganizeFilesPerDate
 				
                 if (sort)
                 {
-                    string targetPath = String.Format("{0}{3}{1}{3}{2}{3}", pathOutput, year, month, FileSystem.PathDelimiter);
-                    FileSystem.CreateDirectory(targetPath, true);
-                    targetFile = targetPath + FileSystem.GetFilename(file);
+                    string targetPath = String.Format("{0}{3}{1}{3}{2}{3}", pathOutput, year, month, Paths.PathDelimiter);
+                    DirectoryOperations.CreateDirectory(targetPath, true);
+                    targetFile = targetPath + Paths.GetFilename(file);
                 } else
                 {
-                    targetFile = String.Format("{0}{4}{1}-{2}-{3} - {5}", pathOutput, year, month, day, FileSystem.PathDelimiter, FileSystem.GetFilename(file));
+                    targetFile = String.Format("{0}{4}{1}-{2}-{3} - {5}", pathOutput, year, month, day, Paths.PathDelimiter, Paths.GetFilename(file));
                 }
 				
                 if (move)
                 {
-                    FileSystem.MoveFile(file, targetFile);
+                    FileOperations.MoveFile(file, targetFile);
                 } else
                 {
-                    FileSystem.CopyFile(file, targetFile);
+                    FileOperations.CopyFile(file, targetFile);
                 }
             }
             #endregion

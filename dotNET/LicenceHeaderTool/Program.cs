@@ -18,11 +18,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CSCL;
+using Xevle.IO;
 using System.IO;
-using CSCL.Helpers;
+using Xevle.Core.Helper;
 
 namespace LicenceHeaderTool
 {
@@ -30,8 +28,8 @@ namespace LicenceHeaderTool
 	{
 		static void DisplayHelp()
 		{
-			Console.WriteLine("Licence Header Tool v1.05");
-			Console.WriteLine("(c) 2012 by the seeseekey (http://seeseekey.net)");
+			Console.WriteLine("Licence Header Tool v1.10");
+			Console.WriteLine("(c) 2012 - 2017 by the seeseekey (http://seeseekey.net)");
 			Console.WriteLine("");
 			Console.WriteLine("Nutzung: LicenceHeaderTool -action -parameters");
 			Console.WriteLine("  z.B. LicenceHeaderTool -GPLv3 /test seeseekey seeseekey@example.org \"2011, 2012\"");
@@ -45,7 +43,7 @@ namespace LicenceHeaderTool
 			List<string> ret=new List<string>();
 
 			ret.Add("");
-			ret.Add(String.Format("  {0}", FileSystem.GetFilename(filename)));
+			ret.Add(String.Format("  {0}", Paths.GetFilename(filename)));
 			ret.Add("");
 			ret.Add("  This file is part of Invertika (http://invertika.org)");
 			ret.Add(" ");
@@ -78,7 +76,7 @@ namespace LicenceHeaderTool
 			List<string> ret=new List<string>();
 
 			ret.Add("");
-			ret.Add(String.Format("  {0}", FileSystem.GetFilename(filename)));
+			ret.Add(String.Format("  {0}", Paths.GetFilename(filename)));
 			ret.Add("");
 			ret.Add(String.Format("  Copyright (c) {0} by {1} <{2}>", year, author, mail));
 			ret.Add("");
@@ -102,10 +100,10 @@ namespace LicenceHeaderTool
 		#region Functions
 		static void ProcessCSharpFile(string filename, bool overwrite, string author, string mail, string year, License license)
 		{
-			if(FileSystem.GetFilename(filename.ToLower())=="assemblyinfo.cs"||
-			   FileSystem.GetFilename(filename.ToLower()).IndexOf(".designer.")!=-1)
+			if(Paths.GetFilename(filename.ToLower())=="assemblyinfo.cs"||
+			   Paths.GetFilename(filename.ToLower()).IndexOf(".designer.")!=-1)
 			{
-				Console.WriteLine("Skip file {0}", FileSystem.GetFilename(filename));
+				Console.WriteLine("Skip file {0}", Paths.GetFilename(filename));
 				return;
 			}
 
@@ -158,12 +156,12 @@ namespace LicenceHeaderTool
 						}
 					case License.InvertikaGPLv3:
 						{
-							licenceText=GetInvertikaLicenceHeaderGPLv3(FileSystem.GetFilename(filename));
+							licenceText=GetInvertikaLicenceHeaderGPLv3(Paths.GetFilename(filename));
 							break;
 						}
 					default:
 						{
-							Console.WriteLine("Unknown licence. Skip file. {0}", FileSystem.GetFilename(filename));
+							Console.WriteLine("Unknown licence. Skip file. {0}", Paths.GetFilename(filename));
 							return;
 						}
 				}
@@ -184,17 +182,17 @@ namespace LicenceHeaderTool
 				File.WriteAllLines(filename, licenceText);
 
 				//Ausgabe
-				Console.WriteLine("Add licence header to file {0}", FileSystem.GetFilename(filename));
+				Console.WriteLine("Add licence header to file {0}", Paths.GetFilename(filename));
 			}
 		}
 
 		static void ProcessFiles(string projectPath, bool overwrite, string author, string mail, string year, License license)
 		{
-			List<string> files=FileSystem.GetFiles(projectPath, true);
+			List<string> files=FileOperations.GetFiles(projectPath, true);
 
 			foreach(string file in files)
 			{
-				string ext=FileSystem.GetExtension(file);
+				string ext=Paths.GetExtension(file);
 
 				switch(ext.ToLower())
 				{
@@ -205,7 +203,7 @@ namespace LicenceHeaderTool
 						}
 					default:
 						{
-							Console.WriteLine("Ignore file {0}", FileSystem.GetFilename(file));
+							Console.WriteLine("Ignore file {0}", Paths.GetFilename(file));
 							break;
 						}
 				}

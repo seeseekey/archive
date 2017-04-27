@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LicenceHeaderTool</RootNamespace>
     <AssemblyName>LicenceHeaderTool</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -57,12 +57,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CSCL\CSCL\CSCL.csproj">
-      <Project>{0E720343-5366-4C3A-BC59-7B7FD2C311B5}</Project>
-      <Name>CSCL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +80,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Xevle\Xevle.Core\Xevle.Core.csproj">
+      <Project>{4D90F3D7-F459-4272-A2FB-7A6B6987EA2D}</Project>
+      <Name>Xevle.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xevle\Xevle.IO\Xevle.IO.csproj">
+      <Project>{FF1643AA-E194-4145-8248-028ED9503EB4}</Project>
+      <Name>Xevle.IO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

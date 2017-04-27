@@ -24,6 +24,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -84,6 +85,16 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Xevle\Xevle.Core\Xevle.Core.csproj">
+      <Project>{4D90F3D7-F459-4272-A2FB-7A6B6987EA2D}</Project>
+      <Name>Xevle.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Xevle\Xevle.IO\Xevle.IO.csproj">
+      <Project>{FF1643AA-E194-4145-8248-028ED9503EB4}</Project>
+      <Name>Xevle.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -92,10 +103,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\CSCL\CSCL\CSCL.csproj">
-      <Project>{0E720343-5366-4C3A-BC59-7B7FD2C311B5}</Project>
-      <Name>CSCL</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
